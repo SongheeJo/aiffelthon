@@ -20,7 +20,7 @@
 - 멤버: 조송희 (팀장) / 최정인 / 장혜선 / 이예영 
 - 과정: 전처리 > 클래스 밸런싱 처리 > 특징 추출 > 모델링 > 결과 확인
 
-## about aiffelthon
+## About Aiffelthon
 **<평가 방식>** 
 
 
@@ -33,8 +33,7 @@
 - 다양한 모델 적용 후,  결과 비교
 - 정확도(accuracy)는 95% 이상이어야 함.
 - 민감도(sensitivity)와 특이도(specificity)를 계산할 것
-- 추가 과업((상 ★★★★★) : 소리에서 수포음(crackle)와 천명음(wheeze) 존재 유무 확인
-https://arxiv.org/pdf/2011.00196.pdf 논문을 보면  민감도(sensitivity)와 특이도(specificity)는 다음과 같음
+- 추가 과업 : 소리에서 수포음(crackle)와 천명음(wheeze) 존재 유무 확인
 
 
 ## 1. Dataset 
