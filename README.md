@@ -1,7 +1,13 @@
 # Aiffelthon
-
-<h3 align="center"> 호흡음으로 질병 분류하기 프로젝트 </h3>
-<h5 align="center"> Aiffel 양재, 울산 bAIkery</h5>
+<div align="center">
+</div>
+<h3 align="center"> 🥨 Team bAIkery 🥨</h3>
+<h1 align="center"> 빵 RD(Respiratory Disease)?</h1>
+<h5 align="center">
+AIFFEL 양재, 울산 X 스마트사운드<br>
+호흡음으로 질병 분류하기<br>
+</h5>
+<br>
 
 <div align="center">
   
