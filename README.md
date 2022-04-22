@@ -1,7 +1,7 @@
 # Aiffelthon
 
 <h3 align="center"> 호흡음으로 질병 분류하기 프로젝트 </h3>
-<h5 align="center"> Aiffel 양재 스마트사운드 2팀</h5>
+<h5 align="center"> Aiffel 양재 bAIkery</h5>
 
 <div align="center">
   
