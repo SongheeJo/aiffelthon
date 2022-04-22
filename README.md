@@ -1,10 +1,9 @@
-# Aiffelthon
-<div align="center">
-</div>
+
+
+<h1 align="center"> <br>빵 RD(Respiratory Disease)?</h1>
 <h3 align="center"> 🥨 Team bAIkery 🥨</h3>
-<h1 align="center"> 빵 RD(Respiratory Disease)?</h1>
 <h5 align="center">
-AIFFEL 양재, 울산 X 스마트사운드<br>
+모두의 연구소 AIFFEL X 스마트사운드<br>
 호흡음으로 질병 분류하기<br>
 </h5>
 <br>
