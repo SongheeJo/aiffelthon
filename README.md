@@ -55,6 +55,9 @@
 아래는 교육 후 자세한 내용 추가 예정입니다.
 
 ## 2. 전처리
+- down sampling
+- 5th Butterworth
+- normalization
 
 ## 3. 클래스 밸런싱 처리
 
