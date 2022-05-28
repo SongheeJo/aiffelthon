@@ -2,7 +2,7 @@
 
 <h1 align="center"> <br>빵 RD(Respiratory Disease)?</h1>
 <h3 align="center"> 🥨 Team bAIkery 🥨</h3>
-<h5 align="center"> 조송희 | 이예영 | 오원진 | 장혜선 | 최정인 </h5>
+<h5 align="center"> 조송희 | 오원진 | 장혜선 | 최정인 </h5>
 <h5 align="center">
 모두의 연구소 AIFFEL X 스마트사운드<br>
 호흡음으로 질병 분류하기<br>
