@@ -52,18 +52,25 @@
 <br>
 <br>
 
-아래는 교육 후 자세한 내용 추가 예정입니다.
 
 ## 2. 전처리
-- down sampling
-- 5th Butterworth
-- normalization
+- down sampling (16000)
+- zero padding
+- 5th Butterworth 
 
 ## 3. 클래스 밸런싱 처리
+- smart padding + duplicated padding
+- concatenated augmentation
+- train/test split (stratify=1:1:1:1)
 
 ## 4. 특징 추출
+- blank region clipping
+- frequency/time masking
 
 ## 5. 모델링
+- transfer learning(ResNet34)
+- ResNet
 
-## 6. 결과 확인
+## 6. 결과 확인 (test.py)
+- f1 score, recall
 
