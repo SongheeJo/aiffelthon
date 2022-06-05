@@ -58,6 +58,7 @@
 - train/test split (stratify=1:1:1:1)
 
 ## 4. 특징 추출
+- mel feature extraction
 - blank region clipping
 - frequency/time masking
 
