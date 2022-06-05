@@ -54,7 +54,7 @@
 
 ## 3. 클래스 밸런싱 처리
 - smart padding + duplicated padding
-- concatenated augmentation
+- concatenation-based augmentation
 - train/test split(stratify=1:1:1:1)
 - augmentation(shiftaug, speedaug)
 
