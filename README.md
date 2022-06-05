@@ -48,14 +48,15 @@
 - 환자는 모든 연령대를 포함
 
 ## 2. 전처리
-- down sampling (16000)
+- down sampling(16000Hz)
 - zero padding
-- 5th Butterworth 
+- 5th Butterworth filter
 
 ## 3. 클래스 밸런싱 처리
 - smart padding + duplicated padding
 - concatenated augmentation
-- train/test split (stratify=1:1:1:1)
+- train/test split(stratify=1:1:1:1)
+- augmentation(shiftaug, speedaug)
 
 ## 4. 특징 추출
 - mel feature extraction
