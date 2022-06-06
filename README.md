@@ -55,7 +55,7 @@
 ## 3. 클래스 밸런싱 처리
 - smart padding + duplicated padding
 - concatenation-based augmentation
-- train/test split(stratify=1:1:1:1)
+- train/test split(stratify=normal/crackle/wheeze/both 클래스 비율대로)
 - augmentation(shiftaug, speedaug)
 
 ## 4. 특징 추출
