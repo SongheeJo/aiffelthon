@@ -34,7 +34,7 @@
 
 ### CONCLUSION AND FUTURE WORK
 
-![images/respirenet_performance.png] (https://github.com/SongheeJo/aiffelthon/blob/main/images/respirenet_performance.png)>
+![images/respirenet_performance.png](https://github.com/SongheeJo/aiffelthon/blob/main/images/respirenet_performance.png)
 
  - concatenation-based augmentation (CBA), blank region clipping (BRC) and device specific fine-tuning (FT)
 
