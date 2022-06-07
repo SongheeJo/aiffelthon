@@ -43,7 +43,7 @@
 
 # 논문에서 소개된 내용
 
-**2.METHOD**
+### **METHOD**
 
 Dataset*: We perform all evaluations on the ICBHI scientific challenge respiratory sound dataset. It is one of the largest publicly available respiratory datasets. The dataset comprises of 920 recordings from 126 patients with a combined total duration of 5.5 hours. Each breathing cycle in a recording is annotated by an expert as one of the four classes: normal, crackle, wheeze, or both (crackle and wheeze). The dataset comprises of recordings from four different devices from hospitals in Portugal and Greece. For every patient, data was recorded at seven different body locations.
 
@@ -51,7 +51,7 @@ Dataset*: We perform all evaluations on the ICBHI scientific challenge respirato
 
 *Network architecture*: We use a CNN-based network, ResNet34, followed by two 128-d fully connected linear layers with ReLU activations. The last layer applies softmax activation to model classwise probabilities. Dropout is added to the fully connected layers to prevent overfitting. The network is trained via a standard categorical cross-entropy loss to minimize the loss for multi-class classification. The overall framework and architecture is illustrated in Figure 1.
 
-**2.1. Efficient Dataset Utilization**
+### **Efficient Dataset Utilization**
 Even though ICBHI is the largest publicly available dataset with 6898 samples, it is still relatively small for training DNNs effectively. Thus, a major focus of our work has been to develop techniques to efficiently use the available samples.
 
  We extensively analyzed the dataset to identify dataset characteristics that inhibit training DNNs effectively, and propose solutions to overcome the same.
@@ -75,30 +75,31 @@ Fig. 3. Blank region clipping: The network attention starts focusing more on the
 **Device Specific Fine-tuning**: The ICBHI dataset has samples from 4 different devices. We found that the distribution of samples across devices is heavily skewed, e.g. the AKGC417L Microphone alone contributes to 63% of the samples. Since each device has different audio characteristics, the DNN may fail to generalize across devices, especially for the underrepresented devices in the already small dataset. To verify this, we divided the test set into 4 subsets depending on their device type, and compute the accuracy of abnormal class samples in each subset. As expected, we found the classification accuracy to be strongly correlated with the training set size of the corresponding device. To address this, we first train a common model with the full training data (stage-1, Figure 1). We then make 4 copies of this model and fine-tune (stage-2) them for each device separately by using only the subset of training data for that device. We found this approach to significantly improve the performance, especially for the underrepresented devices.
 
 
-**Chest location
-a. Trachea (Tc)    # 기도** (wheezing(천명음), crackle(수포음) 사운드 x but 협찹음(stridor) good)
-**b. Anterior left (Al)    #** 앞면청진 
+
+**Chest location: 
+a. Trachea (Tc)
+**b. Anterior left (Al)  
 **c. Anterior right (Ar)
-d. Posterior left (Pl)   #** 후면청진
+d. Posterior left (Pl)  
 **e. Posterior right (Pr)
-f. Lateral left (Ll)   #** 측면청진 - 협찹음을 제외한 소리를 얻을 수 있음
+f. Lateral left (Ll)  
 **g. Lateral right (Lr)**
 
 ---
 
 ### 데이터셋의 몇 가지 특성
 
-In order to efficiently use the available data, we did extensive analysis of the ICBHI dataset. We found several characteristics of the data that might inhibit training DNNs effectively. For example, the dataset contains audio recordings from four different devices, with skewed distribution of samples across the devices, which makes it difficult for DNNs to generalize well across devices. Similarly, the dataset has a skewed distribution across normal and abnormal classes, and varying lengths of audio samples. We propose multiple novel techniques to address these problems—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding. We perform extensive evaluation and ablation analysis of these techniques.
+ In order to efficiently use the available data, we did extensive analysis of the ICBHI dataset. We found several characteristics of the data that might inhibit training DNNs effectively. For example, the dataset contains audio recordings from four different devices, with skewed distribution of samples across the devices, which makes it difficult for DNNs to generalize well across devices. Similarly, the dataset has a skewed distribution across normal and abnormal classes, and varying lengths of audio samples. We propose multiple novel techniques to address these problems—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding. We perform extensive evaluation and ablation analysis of these techniques.
 
 ### Summary
-> - 위 데이터셋의 특성은 DNN을 효과적으로 돌리기 어렵게 함 
-- 소리 샘플에 녹음기마다 서로 다른 왜곡된 분포 O  → 모델이 일반화된 학습을 하기에는 어렵다
-- normal / abnormal 클래스에 서로 다른 왜곡된 분포 + 서로 다른 샘플 길이
-- 데이터셋을 효율적으로 사용하고자 만든 간단한 호흡분류기 네트워크 구조와 기법들
-- 이 논문에서 소개되는 기법들은 여기서 사용된 네트워크 구조 뿐만아니라 다른 네트워크에도 쉽게 포함될 수 있도록 고안됨
+   - 위 데이터셋의 특성은 DNN을 효과적으로 돌리기 어렵게 함 
+   - 소리 샘플에 녹음기마다 서로 다른 왜곡된 분포 O  → 모델이 일반화된 학습을 하기에는 어렵다
+   - normal / abnormal 클래스에 서로 다른 왜곡된 분포 + 서로 다른 샘플 길이
+   - 데이터셋을 효율적으로 사용하고자 만든 간단한 호흡분류기 네트워크 구조와 기법들
+   - 이 논문에서 소개되는 기법들은 여기서 사용된 네트워크 구조 뿐만아니라 다른 네트워크에도 쉽게 포함될 수 있도록 고안됨
 
-## II. An improved adventitious lung sound classification using non-local block
-resnet neural network with mixup data augmentation
+# II. An improved adventitious lung sound classification using non-local block
+: resnet neural network with mixup data augmentation
 
 ### [참고] I. RespireNet (PPT논문) 내용 중 4. RELATED WORK
 
@@ -106,7 +107,7 @@ Recently, there has been a lot of interest in using deep learning models for res
 
 ---
 
-## (1) 호흡음 분류에 딥러닝을 사용한 최근 연구
+### (1) 호흡음 분류에 딥러닝을 사용한 최근 연구
 
 - Jyotibdha Acharya and Arindam Basu. Deep neural network
 for respiratory sound classification in wearable devices enabled by patient specific model tuning. IEEE Transactions on
@@ -123,23 +124,19 @@ resnet neural network with mixup data augmentation. 08 2020.
 
 ### Abstract
 
-Performing an automated adventitious lung sound detection is a challenging task since the sound is susceptible to noises (heart-beat, motion artifacts, and audio sound) and there is subtle discrimination among different categories. An adventitious lung sound classification model, LungRN+NL, is proposed in this work, which has demonstrated a drastic improvement compared to our previous work and the state-of-the-art models. This new model has incorporated the non-local block in the ResNet architecture. To address the imbalance problem and to improve the robustness of the model, we have also incorporated the mixup method to augment the training dataset. Our model has been implemented and compared with the state-of-the-art works using the official ICBHI 2017 challenge dataset and their evaluation method. As a result, `**LungRN+NL**` has achieved a performance
-score of 52.26%, which is improved by 2.1-12.7% compared to
-the state-of-the-art models.
+Performing an automated adventitious lung sound detection is a challenging task since the sound is susceptible to noises (heart-beat, motion artifacts, and audio sound) and there is subtle discrimination among different categories. An adventitious lung sound classification model, LungRN+NL, is proposed in this work, which has demonstrated a drastic improvement compared to our previous work and the state-of-the-art models. This new model has incorporated the non-local block in the ResNet architecture. To address the imbalance problem and to improve the robustness of the model, we have also incorporated the mixup method to augment the training dataset. Our model has been implemented and compared with the state-of-the-art works using the official ICBHI 2017 challenge dataset and their evaluation method. As a result, `**LungRN+NL**` has achieved a performance score of 52.26%, which is improved by 2.1-12.7% compared to the state-of-the-art models.
 
 ### Summary
-- Deep-learning based model은 이전에 사용되던 통계적 기법이나 전통적인 머신 러닝 기법(부스트 결정 트리, SVM)보다 나은 결과를 냄. 
-- 딥러닝 모델들은 소리 신호를 파형이미지로 바꾸어 모델에게 인풋데이터로 투입함. (중략) 4개 분류에 사용되는 deep recurrent nework는 65.7%(80-20split). 
-- Deep residual networks와 특성들을 베이스로 최적화된(optimized) S-transform은 클래스 3개 분류에 사용됨. (이 모델은 70-30 분할로 ICBHI 데이터셋 중 더 작은 부분만 사용했고, 98%의 점수를 성취하였음.)
+   - Deep-learning based model은 이전에 사용되던 통계적 기법이나 전통적인 머신 러닝 기법(부스트 결정 트리, SVM)보다 나은 결과를 냄. 
+   - 딥러닝 모델들은 소리 신호를 파형이미지로 바꾸어 모델에게 인풋데이터로 투입함. (중략) 4개 분류에 사용되는 deep recurrent nework는 65.7%(80-20split). 
+   - Deep residual networks와 특성들을 베이스로 최적화된(optimized) S-transform은 클래스 3개 분류에 사용됨. (이 모델은 70-30 분할로 ICBHI 데이터셋 중 더 작은 부분만 사용했고, 98%의 점수를 성취하였음.)
+   - LungRN+LN 이라는 모델에 RespireNet 논문과 같은 데이터셋, 평가 방법을 사용한 사례이며, 성능이 52.26%에서 2.1~12.7% 범위로 개선되어 시도해볼 법한 모델로 판단됨.
 
 **Index Terms**: adventitious lung sounds classification, mixup, data augmentation, convolutional neural network, non-local block
 
-- ### Summary 
-
-- LungRN+LN 이라는 모델에 RespireNet 논문과 같은 데이터셋, 평가 방법을 사용한 사례이며, 성능이 52.26%에서 2.1~12.7% 범위로 개선되어 시도해볼 법한 모델로 판단됨.
 
 
-## III. **Triple-Classification of Respiratory Sounds Using Optimized S-Transform and Deep Residual Networks **
+# III. **Triple-Classification of Respiratory Sounds Using Optimized S-Transform and Deep Residual Networks **
 
 - RESPIRENET related works에서 98%라는 더 좋은 성과를 낸 논문이며, optimized S-transform(OST) 와 deep residual networks(ResNets)을 사용하여 wheeze, crackle and normal 을 분류하였음.
 
