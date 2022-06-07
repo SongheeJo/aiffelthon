@@ -32,7 +32,7 @@
 
 - [참조 소스](https://github.com/Shivam-316/Respiratory-Disease-Detection) 실행 후 결과 확인
 - 다양한 모델 적용 후,  결과 비교
-- 정확도(accuracy)는 95% 이상이어야 함.
+- 과업 질병분류 모델의 정확도(accuracy)는 95% 이상이어야 함.
 - 민감도(sensitivity)와 특이도(specificity)를 계산할 것
 - 추가 과업 : 소리에서 수포음(crackle)와 천명음(wheeze) 존재 유무 확인
 
@@ -44,8 +44,8 @@
 - 각각의 녹음 파일에 대한 주석이 포함됨
 - 6898개의 호흡 주기를 포함해 총 5.5시간 분량의 녹음 기록 
 - 1864개에는 수포음(crackle), 886개에는 천명음(wheeze), 506개에는 수포음(crackle) 와 천명음(wheeze) 이 모두 포함되어 있음. 
-- wheeze - high-pitched, Frequency range of **100 -2500Hz** and **duration above 80msec**
-- crackle - high-pitched, **duration** of a crackle is **lower than 20 ms** and the frequency range is **between 100 and 200 Hz**
+- wheeze - 높은 피치, Frequency range of **100 -2500Hz** and **duration above 80msec**
+- crackle - 높은 피치, high-pitched, **duration** of a crackle is **lower than 20 ms** and the frequency range is **between 100 and 200 Hz**
 - 데이터에는 깨끗한 호흡음만을 포함한 녹음 파일과 실제 생활 조건을 반영해 소음이 포함된 녹음 파일이 있음. 
 - 환자는 모든 연령대를 포함
 
@@ -71,6 +71,14 @@
 
 ## 6. 결과 확인 (test.py)
 - f1 score, recall
+
+## 7. 참고 논문
+- A Window Width Optimized S-Transform(2008)
+- Classification of lung sounds using convolutional neural networks(2017)
+- respireNet(2020)
+- DC-UNet: Rethinking the U-Net Architecture with Dual Channel Efficient CNN for Medical Images Segmentation(2020)
+- FILTERAUGMENT: AN ACOUSTIC ENVIRONMENTAL DATA AUGMENTATION METHOD(2021)
+
 
 <br>
 <br>
