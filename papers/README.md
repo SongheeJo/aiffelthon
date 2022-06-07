@@ -28,13 +28,13 @@
 ![images/Respirenet_Framework.png](https://github.com/SongheeJo/aiffelthon/blob/main/images/Respirenet_Framework.png)
 
 
-### Summary <br>
-사운드 신호 전처리(bandpass filtering, downsampling, normalization, etc., ...) → concatenation-based 증강 → smart padding → mel-spectrogram 생성 → blank region clipping → 처리된 파형이미지를 모델에 넣음 → 모델 훈련 1단계: 훈련 세트 전체를 이용 → 2단계: 파인튜닝, 데이터중 각각의 장비에 맞는 부분만 사용하여 훈련!
+### Summary 
+     - 사운드 신호 전처리(bandpass filtering, downsampling, normalization, etc., ...) → concatenation-based 증강 → smart padding → mel-spectrogram 생성 → blank region clipping → 처리된 파형이미지를 모델에 넣음 → 모델 훈련 1단계: 훈련 세트 전체를 이용 → 2단계: 파인튜닝, 데이터중 각각의 장비에 맞는 부분만 사용하여 훈련!
 
 
 ### CONCLUSION AND FUTURE WORK
 
-![images/respirenet_performance.png](https://github.com/SongheeJo/aiffelthon/blob/main/images/respirenet_performance.png)
+       ![images/respirenet_performance.png](https://github.com/SongheeJo/aiffelthon/blob/main/images/respirenet_performance.png)
 
  - concatenation-based augmentation (CBA), blank region clipping (BRC) and device specific fine-tuning (FT)
 
