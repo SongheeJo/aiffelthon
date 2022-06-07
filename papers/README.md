@@ -99,7 +99,7 @@ f. Lateral left (Ll)
    - 이 논문에서 소개되는 기법들은 여기서 사용된 네트워크 구조 뿐만아니라 다른 네트워크에도 쉽게 포함될 수 있도록 고안됨
 
 # II. An improved adventitious lung sound classification using non-local block
-: resnet neural network with mixup data augmentation
+: resnet neural network with mixup data augmentation으로서 98%를 달성함.
 
 ### [참고] I. RespireNet (PPT논문) 내용 중 4. RELATED WORK
 
@@ -127,7 +127,7 @@ resnet neural network with mixup data augmentation. 08 2020.
 Performing an automated adventitious lung sound detection is a challenging task since the sound is susceptible to noises (heart-beat, motion artifacts, and audio sound) and there is subtle discrimination among different categories. An adventitious lung sound classification model, LungRN+NL, is proposed in this work, which has demonstrated a drastic improvement compared to our previous work and the state-of-the-art models. This new model has incorporated the non-local block in the ResNet architecture. To address the imbalance problem and to improve the robustness of the model, we have also incorporated the mixup method to augment the training dataset. Our model has been implemented and compared with the state-of-the-art works using the official ICBHI 2017 challenge dataset and their evaluation method. As a result, `**LungRN+NL**` has achieved a performance score of 52.26%, which is improved by 2.1-12.7% compared to the state-of-the-art models.
 
 ### Summary
-   - Deep-learning based model은 이전에 사용되던 통계적 기법이나 전통적인 머신 러닝 기법(부스트 결정 트리, SVM)보다 나은 결과를 냄. 
+   - Deep-learning based model은 이전에 사용되던 통계적 기법이나 전통적인 머신 러닝 기법(Boosting dedcision tree, SVM)보다 나은 결과를 냄. 
    - 딥러닝 모델들은 소리 신호를 파형이미지로 바꾸어 모델에게 인풋데이터로 투입함. (중략) 4개 분류에 사용되는 deep recurrent nework는 65.7%(80-20split). 
    - Deep residual networks와 특성들을 베이스로 최적화된(optimized) S-transform은 클래스 3개 분류에 사용됨. (이 모델은 70-30 분할로 ICBHI 데이터셋 중 더 작은 부분만 사용했고, 98%의 점수를 성취하였음.)
    - LungRN+LN 이라는 모델에 RespireNet 논문과 같은 데이터셋, 평가 방법을 사용한 사례이며, 성능이 52.26%에서 2.1~12.7% 범위로 개선되어 시도해볼 법한 모델로 판단됨.
@@ -136,7 +136,7 @@ Performing an automated adventitious lung sound detection is a challenging task 
 
 
 
-# III. **Triple-Classification of Respiratory Sounds Using Optimized S-Transform and Deep Residual Networks **
+# III. Triple-Classification of Respiratory Sounds Using Optimized S-Transform and Deep Residual Networks
 
 - RESPIRENET related works에서 98%라는 더 좋은 성과를 낸 논문이며, optimized S-transform(OST) 와 deep residual networks(ResNets)을 사용하여 wheeze, crackle and normal 을 분류하였음.
 
