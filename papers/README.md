@@ -41,7 +41,7 @@
     4.  **이 논문에서 제기된 이슈 주의, 데이터셋의 양을 늘리는 거 자체에 집중하기를 추천**
 
 
-# 논문에서 소개된 Sound data processing methods
+## 논문에서 소개된 Sound data processing methods
 
 ### **METHOD**
 
@@ -76,14 +76,7 @@ Fig. 3. Blank region clipping: The network attention starts focusing more on the
 
 
 
-**Chest location: 
-a. Trachea (Tc)
-**b. Anterior left (Al)  
-**c. Anterior right (Ar)
-d. Posterior left (Pl)  
-**e. Posterior right (Pr)
-f. Lateral left (Ll)  
-**g. Lateral right (Lr)**
+**Chest location: Trachea (Tc),  Anterior left (Al), Anterior right (Ar), Posterior left (Pl), Posterior right (Pr), Lateral left (Ll), Lateral right (Lr)**
 
 ---
 
@@ -92,11 +85,14 @@ f. Lateral left (Ll)
  In order to efficiently use the available data, we did extensive analysis of the ICBHI dataset. We found several characteristics of the data that might inhibit training DNNs effectively. For example, the dataset contains audio recordings from four different devices, with skewed distribution of samples across the devices, which makes it difficult for DNNs to generalize well across devices. Similarly, the dataset has a skewed distribution across normal and abnormal classes, and varying lengths of audio samples. We propose multiple novel techniques to address these problems—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding. We perform extensive evaluation and ablation analysis of these techniques.
 
 ### Summary
-   - 위 데이터셋의 특성은 DNN을 효과적으로 돌리기 어렵게 함 
-   - 소리 샘플에 녹음기마다 서로 다른 왜곡된 분포 O  → 모델이 일반화된 학습을 하기에는 어렵다
-   - normal / abnormal 클래스에 서로 다른 왜곡된 분포 + 서로 다른 샘플 길이
-   - 데이터셋을 효율적으로 사용하고자 만든 간단한 호흡분류기 네트워크 구조와 기법들
-   - 이 논문에서 소개되는 기법들은 여기서 사용된 네트워크 구조 뿐만아니라 다른 네트워크에도 쉽게 포함될 수 있도록 고안됨
+    - 위 데이터셋의 특성은 DNN을 효과적으로 돌리기 어렵게 함 
+    - 소리 샘플에 녹음기마다 서로 다른 왜곡된 분포 O  → 모델이 일반화된 학습을 하기에는 어렵다
+    - normal / abnormal 클래스에 서로 다른 왜곡된 분포 + 서로 다른 샘플 길이
+    - 데이터셋을 효율적으로 사용하고자 만든 간단한 호흡분류기 네트워크 구조와 기법들
+    - 이 논문에서 소개되는 기법들은 여기서 사용된 네트워크 구조 뿐만아니라 다른 네트워크에도 쉽게 포함될 수 있도록 고안됨
+    
+    
+    
 
 # II. An improved adventitious lung sound classification using non-local block
 : resnet neural network with mixup data augmentation으로서 98%를 달성함.
