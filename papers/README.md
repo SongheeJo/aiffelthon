@@ -40,7 +40,6 @@ concatenation-based augmentation (CBA), blank region clipping (BRC) and device s
 4.  **이 논문에서 제기된 이슈 주의, 데이터셋의 양을 늘리는 거 자체에 집중하기를 추천**
 
 
-
 # 논문에서 소개된 내용
 
     **2.METHOD**
@@ -142,7 +141,7 @@ the state-of-the-art models.
 
 ## III. **Triple-Classification of Respiratory Sounds Using Optimized S-Transform and Deep Residual Networks **
 
-- RESPIRENET related works에서 98%라는 더 좋은 성과를 낸 논문 임.
+- RESPIRENET related works에서 98%라는 더 좋은 성과를 낸 논문이며, optimized S-transform(OST) 와 deep residual networks(ResNets)을 사용하여 wheeze, crackle and normal 을 분류하였음.
 
 ### Introduction
 > Deep residual networks and optimized S-transform
@@ -153,10 +152,8 @@ and tested on a smaller subset of the ICBHI dataset on a 70-30 split and achieve
 ### Problems
 
 > However, due to the contained artifacts and constrained feature extraction methods, the reliability and accuracy of the classification of wheeze, crackle, and normal sounds need significant improvement
-> 
 
-이 논문에서는 optimized S-transform(OST) 와 deep residual networks(ResNets)을 사용하여 wheeze, crackle and normal 을 분류하였음.
 
 ### Procedures
 
--> 먼저 raw respiratory sound 가 OST를 사용하여 processed → spectogram of OST 가 Resnet을 위해 rescaled → ResNet을 통해 feature learning 과 classification 을 하고 respiratory sound 의 클래스를 recognize하게 함.
+> raw respiratory sound 가 OST를 사용하여 processed → spectogram of OST 가 Resnet을 위해 rescaled → ResNet을 통해 feature learning 과 classification 을 하고 respiratory sound 의 클래스를 recognize하게 함.
