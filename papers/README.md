@@ -24,12 +24,14 @@
 > Summary <br>
 사운드 신호 전처리(bandpass filtering, downsampling, normalization, etc., ...) → concatenation-based 증강 → smart padding → mel-spectrogram 생성 → blank region clipping → 처리된 파형이미지를 모델에 넣음 → 모델 훈련 1단계: 훈련 세트 전체를 이용 → 2단계: 파인튜닝, 데이터중 각각의 장비에 맞는 부분만 사용하여 훈련!
 
-## CONCLUSION AND FUTURE WORK
+### CONCLUSION AND FUTURE WORK
 
 - The paper proposes RespireNet a simple CNN-based model, along with a set of novel techniques—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding—enabling us to effectively utilize a small-sized dataset for accurate abnormality detection in lung sounds. Our proposed method achieved a new SOTA for the ICBHI dataset, on both the 2-class and 4-class classification tasks. Further, our proposed techniques are orthogonal to the choice of network architecture and should be easy to incorporate within other frameworks. The current performance limit of the 4-class classification task can be mainly attributed to the small size of the ICBHI dataset, and the variation among the recording devices. Furthermore, there is lack of standardization in the 80-20 split and we found variance in the results based on the particular split. In future, **we would recommend that the community should focus on capturing a larger dataset, while taking care of the issues raised in this paper.**
 
 
 ![image](https://user-images.githubusercontent.com/67695343/166189777-b866bdb8-fda4-43cb-a3dd-f88ee07eda27.png)
+
+concatenation-based augmentation (CBA), blank region clipping (BRC) and device specific fine-tuning (FT)
 
 ### Summary
 1. 작은 양의 ICBHI 데이터셋, 그리고 녹음기들 사이의 다양화
@@ -37,12 +39,11 @@
 3. not 80-20 split! → 80-20은 표준화(standardization)하기엔 부족
 4.  **이 논문에서 제기된 이슈 주의, 데이터셋의 양을 늘리는 거 자체에 집중하기를 추천**
 
-concatenation-based augmentation (CBA), blank region clipping (BRC) and device specific fine-tuning (FT)
 
 
 # 논문에서 소개된 내용
 
-    **2. METHOD**
+    **2.METHOD**
     *Dataset*: We perform all evaluations on the ICBHI scientific challenge respiratory sound dataset. It is one of the largest publicly available respiratory datasets. The dataset comprises of 920 recordings from 126 patients with a combined total duration of 5.5 hours. Each breathing cycle in a recording is annotated by an expert as one of the four classes: normal, crackle, wheeze, or both (crackle and wheeze). The dataset comprises of recordings from four different devices from hospitals in Portugal and Greece. For every patient, data was recorded at seven different body locations.
 
     *Pre-processing*: The sampling rate of recordings in the dataset varies from 4 kHz to 44.1 kHz. To standardize, we down-sample the recordings to 4 kHz and apply a 5-th order Butterworth band-pass filter to remove noise (heartbeat, background speech, etc.). We also apply standard normalization on the input signal to map the values within the range (-1, 1). The audio signal is then converted into a Mel-spectrogram, which is fed into our DNN.
@@ -91,8 +92,7 @@ f. Lateral left (Ll)   #** 측면청진 - 협찹음을 제외한 소리를 얻�
 In order to efficiently use the available data, we did extensive analysis of the ICBHI dataset. We found several characteristics of the data that might inhibit training DNNs effectively. For example, the dataset contains audio recordings from four different devices, with skewed distribution of samples across the devices, which makes it difficult for DNNs to generalize well across devices. Similarly, the dataset has a skewed distribution across normal and abnormal classes, and varying lengths of audio samples. We propose multiple novel techniques to address these problems—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding. We perform extensive evaluation and ablation analysis of these techniques.
 
 ### Summary
-
-- 위 데이터셋의 특성은 DNN을 효과적으로 돌리기 어렵게 함 
+> - 위 데이터셋의 특성은 DNN을 효과적으로 돌리기 어렵게 함 
 - 소리 샘플에 녹음기마다 서로 다른 왜곡된 분포 O  → 모델이 일반화된 학습을 하기에는 어렵다
 - normal / abnormal 클래스에 서로 다른 왜곡된 분포 + 서로 다른 샘플 길이
 - 데이터셋을 효율적으로 사용하고자 만든 간단한 호흡분류기 네트워크 구조와 기법들
@@ -159,4 +159,4 @@ and tested on a smaller subset of the ICBHI dataset on a 70-30 split and achieve
 
 ### Procedures
 
-먼저 raw respiratory sound 가 OST를 사용하여 processed → spectogram of OST 가 Resnet을 위해 rescaled → ResNet을 통해 feature learning 과 classification 을 하고 respiratory sound 의 클래스를 recognize하게 함.
+-> 먼저 raw respiratory sound 가 OST를 사용하여 processed → spectogram of OST 가 Resnet을 위해 rescaled → ResNet을 통해 feature learning 과 classification 을 하고 respiratory sound 의 클래스를 recognize하게 함.
