@@ -40,8 +40,7 @@
 concatenation-based augmentation (CBA), blank region clipping (BRC) and device specific fine-tuning (FT)
 
 
-## (1) 데이터 증강방법에 관한 부분
-
+# 논문에서 소개된 내용
 
     **2. METHOD**
     *Dataset*: We perform all evaluations on the ICBHI scientific challenge respiratory sound dataset. It is one of the largest publicly available respiratory datasets. The dataset comprises of 920 recordings from 126 patients with a combined total duration of 5.5 hours. Each breathing cycle in a recording is annotated by an expert as one of the four classes: normal, crackle, wheeze, or both (crackle and wheeze). The dataset comprises of recordings from four different devices from hospitals in Portugal and Greece. For every patient, data was recorded at seven different body locations.
@@ -76,15 +75,6 @@ Fig. 3. Blank region clipping: The network attention starts focusing more on the
     Figure 1). We then make 4 copies of this model and fine-tune (stage-2) them for each device separately by using only the subset of training data for that device. We found this approach to significantly improve the performance, especially for the underrepresented devices.
 
 
-### Dataset summary  :
-
-① 920개 (126명의 환자에게서 녹음)
-② 총 5.5시간
-③ 클래스 4개 (normal, crackle, wheeze, both (crackle과 wheeze 둘 다 있는 경우))
-④ 녹음기 종류 - 서로 다른 4개
-⑤ 녹음 장소 : 포르투갈, 그리스
-⑥ 녹음 부위 - 서로 다른 7가지 신체 부위 (환자 당)
-
 **Chest location
 a. Trachea (Tc)    # 기도** (wheezing(천명음), crackle(수포음) 사운드 x but 협찹음(stridor) good)
 **b. Anterior left (Al)    #** 앞면청진 
@@ -94,92 +84,7 @@ d. Posterior left (Pl)   #** 후면청진
 f. Lateral left (Ll)   #** 측면청진 - 협찹음을 제외한 소리를 얻을 수 있음
 **g. Lateral right (Lr)**
 
-### 전처리 :
-
-- 녹음 파일들의 샘플링이 4kHz부터 44kHz까지 달라서 모조리 4kHz로 다운샘플링
-- 노이즈(심장박동, background 말소리 등)를 없애고, 5차(5-n) Butterworth 대역 필터를 적용
-- 데이터값을 -1, 1 범위안으로 맵핑하기 위해 인풋 신호에 standard normalization 적용
-- 그리고 나서 멜-스펙트로그램('음성 데이터'를 '특징벡터'(Feature)화 해주는 알고리즘)으로 변환되어 DNN에 투입된다.
-
-### 네트워크 구조 :
-
-- CNN 베이스의 네트워크
-- 2개의 128-d 완전연결된 linear layers (ReLU activations)
-- 클래스 범위 확률을 모델링할 때는 마지막 레이어에 softmax activation 적용
-- 오버피팅을 막기 위해 fully connected layers에 드랍아웃추가
-- 다중분류를 위한 loss를 최소화하기 위해 standard categorical cross-entropy loss를 통해 훈련
-- 전체적인 framework와 구조는 맨 위의 Figure 1 참고
-
 ---
-
-### 효율적인 데이터셋 이용 방법
-
-충분한 데이터양을 모으고자 사용할 수 있는 샘플들을 효과적으로 사용하게 하는 기법 
-
-### 1) 전이 학습(transfer learning)
-
-- 사전학습된 <`**ImageNet**`에서의 `**ResNet-34**` 네트워크>의 웨이트로 우리의 네트워크를 초기화(initialize)
-- 이것은 우리가 전체 네트워크를 끝과 끝을 이어붙여(end-to-end) 훈련시킨 뒤에 수행
-- 이미지넷 데이터셋이 우리 네트워크가 보는 스펙트로그램과는 아주 다르지만, 이 초기화작업은 상당히 도움이 됨
-- edge-detection(윤곽선 검출)같은 저레벨 특성들은 여전히 비슷한 상태이므로 전이가 잘됨.
-
-### 2) Concatenation-based Augmentation
-
-- ICBHI dataset도 다른 대부분의 의학 데이터처럼 class imbalance가 심함
-- normal 클래스가 53%의 비율을 비율을 차지
-- 모델이 abnormal 클래스들에게 오버피팅되는 것을 막기 위해 실험된 여러가지 데이터 증강 기법을 사용함.
-- standard audio augmentation techniques
-    - noise addition
-    - speed variation
-    - random shifting
-    - pitch shift
-    - etc.
-    - weighted random sampler to sample mini-batches uniformly from each class
-- => 불충분하게 대표된 클래스들(wheeze, crackle, both)의 일반화를 작게나마 향상
-- developed Concatenation-based Augmentation 기법
-- 새로운 클래스 생성
-    - 같은 클래스의 두가지 샘플들을 랜덤하게 샘플링하고, 그것들을 연결
-
-![image](https://user-images.githubusercontent.com/67695343/166191697-9e2f1418-2ca8-4a51-a861-59e380683a5f.png)
-         Fig. 2. Proposed concatenation-based augmentation.
-
-- => abnormal 클래스들의 분류 정확도 꽤(non-trivially) 향상
-- 
-### 3) Smart_padding
-- 호흡 주기의 길이는 환자마다 다르고, 환자마다도 다양한 요소들(열났을 때 호흡율이 적당히 오르는 경우 등)에 따라 다르다
-- ICBHI 데이터셋 (호흡 사이클 길이 - 0.2초~16.2초, 평균 2.7초)
-- 우리의 네트워크는 고정된 인풋 사이즈를 기대
-    - 이 문제를 처리하기 위해 일반적으로 쓰는 방식 - 오디오 신호에 패딩을 주는 것
-        - 제로 패딩
-        - reflection based 패딩
-    - 논문이 제안하는 새로운 방식
-        - 스마트 패딩
-            - 현재 샘플을 보기 바로 전 후에, 같은 환자에게서 얻어진 호흡 주기 샘플 관찰 → 이웃하는 주기가 같은 클래스거나 normal 클래스면 현재 샘플과 연결
-            - 그렇지 않으면 같은 주기를 다시 카피해서 패딩
-            - 이 처리는 원하는 사이즈에 이를 때 까지 반복
-            - best 인풋길이 - 7s window
-            - 오버피팅 방지 효과
-
-
-### 4) Black Region Clipping
-- 스펙트로그램에서 높은 주파수 부분 쪽 검은 공간
-- 덜 중요한 정보 -> 성능에 역효과
-- 선택적으로 잘라내기
-- 특히 Litt3200 장비로 얻은 샘플들은 100%로 나타남.
-    
-### 5) Device Specific Fine-tuning
-- 장비마다 다른 오디오 특성O → 일반화하기에는 심하게 왜곡됨
-    - AKGC417L Microphone - 샘플의 63%
-- 4개 장비별로 데이터셋을 나눔 
--> 각각의 장비별로  abnormal 클래스의 정확도를 계산 
--> 분류 정확도는 훈련세트의 크기와 강한 연관이 있음을 확인
-- 보통 쓰는(common) 모델을 훈련 데이터 전체로 학습 
--> 이 모델을 4개 카피 
--> 각각에 4개 장비에서 수집된 데이터를 따로 훈련
-- => 상당한 성능 개선
-    - 특히 샘플을 적게 수집한 장치
-
-## (2) 주의해야할 이슈
 
 ### 데이터셋의 몇 가지 특성
 
