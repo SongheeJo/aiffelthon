@@ -44,9 +44,9 @@
 - 각각의 녹음 파일에 대한 주석이 포함됨
 - 6898개의 호흡 주기를 포함해 총 5.5시간 분량의 녹음 기록 
 - 1864개에는 수포음(crackle), 886개에는 천명음(wheeze), 506개에는 수포음(crackle) 와 천명음(wheeze) 이 모두 포함되어 있음. 
-- wheeze - 높은 피치, Frequency range of **100 -2500Hz** and **duration above 80msec**
-- crackle - 높은 피치, high-pitched, **duration** of a crackle is **lower than 20 ms** and the frequency range is **between 100 and 200 Hz**
-- 데이터에는 깨끗한 호흡음만을 포함한 녹음 파일과 실제 생활 조건을 반영해 소음이 포함된 녹음 파일이 있음. 
+- wheeze - 높은 피치, **100 -2500Hz**의 주파수 대역과 **80msec 이상의 지속시간**
+- crackle - 높은 피치, crackle의 **지속시간** is **20 ms보다 더 낮고** 주파수 대역은 **100 and 200 Hz** 사이
+- 데이터에는 깨끗한 호흡음만을 포함한 녹음 파일과 실제 생활 조건을 반영해 소음이 포함된 녹음 파일이 있음. 
 - 환자는 모든 연령대를 포함
 
 ## 2. 전처리
