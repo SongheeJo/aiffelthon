@@ -29,28 +29,26 @@
 - The paper proposes RespireNet a simple CNN-based model, along with a set of novel techniques—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding—enabling us to effectively utilize a small-sized dataset for accurate abnormality detection in lung sounds. Our proposed method achieved a new SOTA for the ICBHI dataset, on both the 2-class and 4-class classification tasks. Further, our proposed techniques are orthogonal to the choice of network architecture and should be easy to incorporate within other frameworks. The current performance limit of the 4-class classification task can be mainly attributed to the small size of the ICBHI dataset, and the variation among the recording devices. Furthermore, there is lack of standardization in the 80-20 split and we found variance in the results based on the particular split. In future, **we would recommend that the community should focus on capturing a larger dataset, while taking care of the issues raised in this paper.**
 
 
-    ### 성과 요인
-
 ![image](https://user-images.githubusercontent.com/67695343/166189777-b866bdb8-fda4-43cb-a3dd-f88ee07eda27.png)
 
-
+### Summary
 1. 작은 양의 ICBHI 데이터셋, 그리고 녹음기들 사이의 다양화
 2. 특정한 split 비율에 근거하여 결과값에 variance(변화(량))를 찾음
-not 80-20 split! → 80-20은 표준화(standardization)하기엔 부족
+3. not 80-20 split! → 80-20은 표준화(standardization)하기엔 부족
+4.  **이 논문에서 제기된 이슈 주의, 데이터셋의 양을 늘리는 거 자체에 집중하기를 추천**
 
 concatenation-based augmentation (CBA), blank region clipping (BRC) and device specific fine-tuning (FT)
 
-3. **이 논문에서 제기된 이슈 주의, 데이터셋의 양을 늘리는 거 자체에 집중하기를 추천**
 
 ## (1) 데이터 증강방법에 관한 부분
 
 
     **2. METHOD**
-    *Dataset*: We perform all evaluations on the ICBHI scientific challenge respiratory sound dataset. It is one of the largest publicly available respiratory datasets. The dataset comprises(구성되다) of 920 recordings from 126 patients with a combined total duration of 5.5 hours. Each breathing cycle in a recording is annotated by an expert as one of the four classes: normal, crackle, wheeze, or both (crackle and wheeze). The dataset comprises of recordings from four different devices from hospitals in Portugal and Greece. For every patient, data was recorded at seven different body locations.
+    *Dataset*: We perform all evaluations on the ICBHI scientific challenge respiratory sound dataset. It is one of the largest publicly available respiratory datasets. The dataset comprises of 920 recordings from 126 patients with a combined total duration of 5.5 hours. Each breathing cycle in a recording is annotated by an expert as one of the four classes: normal, crackle, wheeze, or both (crackle and wheeze). The dataset comprises of recordings from four different devices from hospitals in Portugal and Greece. For every patient, data was recorded at seven different body locations.
 
     *Pre-processing*: The sampling rate of recordings in the dataset varies from 4 kHz to 44.1 kHz. To standardize, we down-sample the recordings to 4 kHz and apply a 5-th order Butterworth band-pass filter to remove noise (heartbeat, background speech, etc.). We also apply standard normalization on the input signal to map the values within the range (-1, 1). The audio signal is then converted into a Mel-spectrogram, which is fed into our DNN.
 
-    *Network architecture*: We use a CNN-based network, ResNet34, followed by two 128-d fully connected linear layers with ReLU activations. The last layer applies softmax activation to model classwise(클래스범위) probabilities. Dropout is added to the fully connected layers to prevent overfitting. The network is trained
+    *Network architecture*: We use a CNN-based network, ResNet34, followed by two 128-d fully connected linear layers with ReLU activations. The last layer applies softmax activation to model classwise probabilities. Dropout is added to the fully connected layers to prevent overfitting. The network is trained
     via a standard categorical cross-entropy loss to minimize the loss for multi-class classification. The overall framework and architecture is illustrated in Figure 1.
 
     **2.1. Efficient Dataset Utilization**
@@ -59,48 +57,35 @@ concatenation-based augmentation (CBA), blank region clipping (BRC) and device s
 
     The first commonly used technique we apply is transfer learning, where we initialize our network with weights of a pre-trained ResNet-34 network on ImageNet [23]. This is followed by our training where we train the entire network end to-end. Interestingly, even though ImageNet dataset is very different from the spectrograms which our network sees, we still found this initialization to help significantly. Most likely, low level features such as edge-detection are still similar and thus “transfer” well.
 
-    **Concatenation-based Augmentation**: Like most medical datasets, ICBHI dataset has a huge class imbalance, with the normal class accounting for(~의 비율을 차지하다) 53% of the samples. To prevent the model from overfitting on abnormal classes, we experimented with several data augmentation techniques. We first apply standard audio augmentation techniques, such as noise addition, speed variation, random shifting, pitch shift, etc., and also use a weighted random sampler to sample mini-batches uniformly from each class. These standard techniques help a little, but to further improve generalization of the underrepresented(불충분하게 대표된) classes (wheeze, crackle, both), we developed a concatenation based augmentation technique where we generate a new sample of a class by randomly sampling two samples of the same class and concatenating them (see Figure 2). This scheme(책략) led to a non-trivial(하찮지 않은) improvement in the classification accuracy of abnormal classes.
+    **Concatenation-based Augmentation**: Like most medical datasets, ICBHI dataset has a huge class imbalance, with the normal class accounting for 53% of the samples. To prevent the model from overfitting on abnormal classes, we experimented with several data augmentation techniques. We first apply standard audio augmentation techniques, such as noise addition, speed variation, random shifting, pitch shift, etc., and also use a weighted random sampler to sample mini-batches uniformly from each class. These standard techniques help a little, but to further improve generalization of the underrepresented classes (wheeze, crackle, both), we developed a concatenation based augmentation technique where we generate a new sample of a class by randomly sampling two samples of the same class and concatenating them (see Figure 2). This scheme led to a non-trivial improvement in the classification accuracy of abnormal classes.
 
 
 ![image](https://user-images.githubusercontent.com/67695343/166191431-7f9be84c-c8f3-4e42-a656-0a92a40e115f.png)
 Fig. 2. Proposed concatenation-based augmentation.
 
-    **Smart Padding**: The breathing cycle length varies across patients as well as within a patient depending on various factors (e.g., breathing rate can increase moderately(적당히) during fever). In the ICBHI dataset, the length of breathing cycles ranges from 0.2s to 16.2s with a mean cycle length of 2.7s. This poses a problem while training our network as it expects a fixed size input. The standard way to handle this is to pad the audio signal to a fixed size via zero-padding or reflection based padding. We propose a novel smart padding scheme, which uses a variant of the augmentation scheme described above. For each data sample, smart padding first looks at the breathing cycle sample for the same patient taken just before and after the current one. If this neighbouring cycle is of the same class or of the normal class, we concatenate the current sample with it. If not, we pad by copying the same cycle again. We continue this process until we reach our desired size. This smart padding scheme also augments the data and helps prevent overfitting. We experimented with different input lengths, and found a 7s window to perform best. A small window led to clipping of samples, thus loosing valuable information in an already scarce dataset, while a very large window caused repetition leading to degraded performance.
+    **Smart Padding**: The breathing cycle length varies across patients as well as within a patient depending on various factors (e.g., breathing rate can increase moderately during fever). In the ICBHI dataset, the length of breathing cycles ranges from 0.2s to 16.2s with a mean cycle length of 2.7s. This poses a problem while training our network as it expects a fixed size input. The standard way to handle this is to pad the audio signal to a fixed size via zero-padding or reflection based padding. We propose a novel smart padding scheme, which uses a variant of the augmentation scheme described above. For each data sample, smart padding first looks at the breathing cycle sample for the same patient taken just before and after the current one. If this neighbouring cycle is of the same class or of the normal class, we concatenate the current sample with it. If not, we pad by copying the same cycle again. We continue this process until we reach our desired size. This smart padding scheme also augments the data and helps prevent overfitting. We experimented with different input lengths, and found a 7s window to perform best. A small window led to clipping of samples, thus loosing valuable information in an already scarce dataset, while a very large window caused repetition leading to degraded performance.
 
 ![image](https://user-images.githubusercontent.com/67695343/166191602-c1f5f9ee-d7fe-4c72-a44e-befe07a56170.png)
 Fig. 3. Blank region clipping: The network attention starts focusing more on the bottom half of the spectrogram, instead of blank spaces after clipping.
 
-    **Blank Region Clipping**: On analyzing samples using GradCam++ which our base model mis-classified(잘못 분류된), we found notable black regions at higher frequency regions of their spectrograms (Figure 3). On further analysis, we found that many samples, and in particular 100% of the Litt3200 device samples, had blank region in the 1500-2000Hz frequency range. Since this was adversely affecting our network performance, we selectively clip off the blank rows from the high frequency regions of such spectrograms. This ensures that the network focuses on the region of interest leading to improved
+    **Blank Region Clipping**: On analyzing samples using GradCam++ which our base model mis-classified, we found notable black regions at higher frequency regions of their spectrograms (Figure 3). On further analysis, we found that many samples, and in particular 100% of the Litt3200 device samples, had blank region in the 1500-2000Hz frequency range. Since this was adversely affecting our network performance, we selectively clip off the blank rows from the high frequency regions of such spectrograms. This ensures that the network focuses on the region of interest leading to improved
     performance. Figure 3 shows this in action.
 
     **Device Specific Fine-tuning**: The ICBHI dataset has samples from 4 different devices. We found that the distribution of samples across devices is heavily skewed, e.g. the
-    AKGC417L Microphone alone contributes to 63% of the samples. Since each device has different audio characteristics, the DNN may fail to generalize across devices, especially for the underrepresented(대표자가 불충분한) devices in the already small dataset. To verify(확인하다) this, we divided the test set into 4 subsets depending on their device type, and compute the accuracy of abnormal class samples in each subset. As expected, we found the classification accuracy to be strongly correlated with the training set size of the corresponding device. To address this, we first train a common model with the full training data (stage-1,
+    AKGC417L Microphone alone contributes to 63% of the samples. Since each device has different audio characteristics, the DNN may fail to generalize across devices, especially for the underrepresented devices in the already small dataset. To verify this, we divided the test set into 4 subsets depending on their device type, and compute the accuracy of abnormal class samples in each subset. As expected, we found the classification accuracy to be strongly correlated with the training set size of the corresponding device. To address this, we first train a common model with the full training data (stage-1,
     Figure 1). We then make 4 copies of this model and fine-tune (stage-2) them for each device separately by using only the subset of training data for that device. We found this approach to significantly improve the performance, especially for the underrepresented devices.
 
-- 요약
 
-### 데이터셋 :
+### Dataset summary  :
 
 ① 920개 (126명의 환자에게서 녹음)
 
 ② 총 5.5시간
 
-③ 클래스 4개
-i) normal
-
-ii)  crackle
-
-iii) wheeze
-
-iv) crackle과 wheeze 둘 다
+③ 클래스 4개 (normal, crackle, wheeze, both (crackle과 wheeze 둘 다 있는 경우))
 ④ 녹음기 종류 - 서로 다른 4개
-⑤ 녹음 장소
-
-i) 포르투갈
-
-ii) 그리스
-
-⑥ 녹음 부위 - 서로 다른 7가지 신체 부위 (모든 환자 당)
+⑤ 녹음 장소 : 포르투갈, 그리스
+⑥ 녹음 부위 - 서로 다른 7가지 신체 부위 (환자 당)
 
 **Chest location
 a. Trachea (Tc)    # 기도** (wheezing(천명음), crackle(수포음) 사운드 x but 협찹음(stridor) good)
@@ -129,22 +114,22 @@ f. Lateral left (Ll)   #** 측면청진 - 협찹음을 제외한 소리를 얻�
 
 ---
 
-### 효율적인 데이터셋 이용
+### 효율적인 데이터셋 이용 
 
 충분한 데이터양을 모으고자 사용할 수 있는 샘플들을 효과적으로 사용하게 하는 기법 
 
-### 전이 학습(transfer learning)
+### 1) 전이 학습(transfer learning)
 
 - 사전학습된 <`**ImageNet**`에서의 `**ResNet-34**` 네트워크>의 웨이트로 우리의 네트워크를 초기화(initialize)
 - 이것은 우리가 전체 네트워크를 끝과 끝을 이어붙여(end-to-end) 훈련시킨 뒤에 수행
 - 이미지넷 데이터셋이 우리 네트워크가 보는 스펙트로그램과는 아주 다르지만, 이 초기화작업은 상당히 도움이 됨
 - edge-detection(윤곽선 검출)같은 저레벨 특성들은 여전히 비슷한 상태이므로 전이가 잘됨.
 
-### Concatenation-based Augmentation
+### 2) Concatenation-based Augmentation
 
-- ICBHI dataset도 대부분의 의학 데이터처럼 class imbalace가 엄청 남
+- ICBHI dataset도 다른 대부분의 의학 데이터처럼 class imbalance가 심함
 - normal 클래스가 53%의 비율을 비율을 차지
-- 모델이 abnormal 클래스들에게 오버피팅되는 것을 막기 위해 실험된 여러가지 데이터 증강 기법들
+- 모델이 abnormal 클래스들에게 오버피팅되는 것을 막기 위해 실험된 여러가지 데이터 증강 기법을 사용함.
 - standard audio augmentation techniques
     - noise addition
     - speed variation
@@ -158,14 +143,12 @@ f. Lateral left (Ll)   #** 측면청진 - 협찹음을 제외한 소리를 얻�
     - 같은 클래스의 두가지 샘플들을 랜덤하게 샘플링하고, 그것들을 연결
 
 ![image](https://user-images.githubusercontent.com/67695343/166191697-9e2f1418-2ca8-4a51-a861-59e380683a5f.png)
-Fig. 2. Proposed concatenation-based augmentation.
+         Fig. 2. Proposed concatenation-based augmentation.
 
 - => abnormal 클래스들의 분류 정확도 꽤(non-trivially) 향상
-- 스마트 패딩
+- Smart_padding
 - 호흡 주기의 길이는 환자마다 다르고, 환자마다도 다양한 요소들(열났을 때 호흡율이 적당히 오르는 경우 등)에 따라 다르다
-- ICBHI 데이터셋
-    - 호흡 사이클 길이 - 0.2초~16.2초
-    - 평균 2.7초
+- ICBHI 데이터셋 (호흡 사이클 길이 - 0.2초~16.2초, 평균 2.7초)
 - 우리의 네트워크는 고정된 인풋 사이즈를 기대
     - 이 문제를 처리하기 위해 일반적으로 쓰는 방식 - 오디오 신호에 패딩을 주는 것
         - 제로 패딩
@@ -179,12 +162,13 @@ Fig. 2. Proposed concatenation-based augmentation.
             - 오버피팅 방지 효과
 
 
-- Black Region Clipping
+### 3) Black Region Clipping
 - 스펙트로그램에서 높은 주파수 부분 쪽 검은 공간
 - 덜 중요한 정보 -> 성능에 역효과
 - 선택적으로 잘라내기
-    - 특히 Litt3200 장비로 얻은 샘플들은 100%
-- Device Specific Fine-tuning
+- 특히 Litt3200 장비로 얻은 샘플들은 100%로 나타남.
+    
+### 4) Device Specific Fine-tuning
 - 장비마다 다른 오디오 특성O → 일반화하기에는 심하게 왜곡됨
     - AKGC417L Microphone - 샘플의 63%
 - 4개 장비별로 데이터셋을 나눔 
@@ -198,43 +182,19 @@ Fig. 2. Proposed concatenation-based augmentation.
 
 ## (2) 주의해야할 이슈
 
-① 데이터셋의 몇 가지 특성
+### 데이터셋의 몇 가지 특성
 
-- 원문
+In order to efficiently use the available data, we did extensive analysis of the ICBHI dataset. We found several characteristics of the data that might inhibit training DNNs effectively. For example, the dataset contains audio recordings from four different devices, with skewed distribution of samples across the devices, which makes it difficult for DNNs to generalize well across devices. Similarly, the dataset has a skewed distribution across normal and abnormal classes, and varying lengths of audio samples. We propose multiple novel techniques to address these problems—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding. We perform extensive evaluation and ablation analysis of these techniques.
 
-In order to efficiently use the available data, we did extensive analysis of the ICBHI dataset. We found several characteristics of the data that might inhibit(억제하다) training DNNs effectively. For example, the dataset contains audio recordings from four different devices, with skewed(왜곡된, 편향된) distribution(분포) of samples across the devices, which makes it difficult for DNNs to generalize well across devices. Similarly, the dataset has a skewed distribution across normal and abnormal classes, and varying lengths of audio samples. We propose multiple novel techniques to address these problems—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding. We perform extensive evaluation and ablation(삭마, 풍화·침식 작용에 의해 얼음·눈·암석이 깎이는 현상) analysis of these techniques.
+### Summary
 
-- 요약
-
-이 데이터셋의 아래 특성은 DNN을 효과적으로 돌리기 어렵게 함 
-
+- 위 데이터셋의 특성은 DNN을 효과적으로 돌리기 어렵게 함 
 - 소리 샘플에 녹음기마다 서로 다른 왜곡된 분포 O  → 모델이 일반화된 학습을 하기에는 어렵다
 - normal / abnormal 클래스에 서로 다른 왜곡된 분포 + 서로 다른 샘플 길이
+- 데이터셋을 효율적으로 사용하고자 만든 간단한 호흡분류기 네트워크 구조와 기법들
+- 이 논문에서 소개되는 기법들은 여기서 사용된 네트워크 구조 뿐만아니라 다른 네트워크에도 쉽게 포함될 수 있도록 고안됨
 
-⇒ 이 데이터셋을 효과적으로 사용하기 위해 고안된 기법
-
-- 녹음 장치별로 파인튜닝
-- concatenation-based-argumentation
-- blank region clipping
-- smart padding
-
-
-② etc.
-
-- 원문
-
-The main contributions of our work are:
-
-1. demonstration that a simple network architecture is sufficient for respiratory sound classification, and more focus is needed on making efficient use of available data.
-2. a detailed analysis of the ICBHI dataset pointing out its
-characteristics impacting(영향을 주다) DNN training significantly.
-3. a suite of techniques—device specific fine-tuning,
-concatenation-based augmentation, blank region clipping and smart padding—enabling efficient dataset usage. These techniques are orthogonal to the choice of network architecture and should be easy to incorporate in other networks.
-- 요약
-1. 데이터셋을 효율적으로 사용하고자 만든 간단한 호흡분류기 네트워크 구조와 기법들
-2. 이 논문에서 소개되는 기법들은 여기서 사용된 네트워크 구조 뿐만아니라 다른 네트워크에도 쉽게 포함될 수 있도록 고안됨
-
-## II. An improved adventitious(우발적인, 우연한) lung sound classification using non-local block
+## II. An improved adventitious lung sound classification using non-local block
 resnet neural network with mixup data augmentation
 
 ### [참고] I. RespireNet (PPT논문) 내용 중 4. RELATED WORK
@@ -263,21 +223,19 @@ resnet neural network with mixup data augmentation. 08 2020.
 
 ## 초록
 
-- 원문
-
 Performing an automated adventitious lung sound detection is a challenging task since the sound is susceptible(민감한) to noises (heart-beat, motion artifacts(움직임 아티팩트 - 영상 촬영시 환자가 움직였을 때 발생되는 것), and audio sound) and there is subtle discrimination((식별되는) 차이) among different categories. An adventitious lung sound classification model, LungRN+NL, is proposed in this work, which has demonstrated a drastic improvement compared to our previous work and the state-of-the-art models. This new model has incorporated(포함하다) the non-local block in the ResNet architecture. To address the imbalance problem and to improve the robustness of the model, we have also incorporated the mixup method to augment the training dataset. Our model has been implemented and compared with the state-of-the-art works using the official ICBHI 2017 challenge dataset and their evaluation method. As a result, `**LungRN+NL**` has achieved a performance
 score of 52.26%, which is improved by 2.1-12.7% compared to
 the state-of-the-art models.
 
 **Index Terms**: adventitious lung sounds classification, mixup, data augmentation, convolutional neural network, non-local block
 
-- 요약
+- Summary 
 
 LungRN+LN 이라는 모델에 ppt논문과 같은 데이터셋, 평가 방법을 사용한 사례 
 성능이 52.26%에서 2.1~12.7% 범위로 개선되어 시도해볼 법한 모델로 보입니다!
 
 
-## III. **A Window Width Optimized S-Transform (예정)**
+## III. **A Window Width Optimized S-Transform **
 
 ### **RESPIRENET**
 
