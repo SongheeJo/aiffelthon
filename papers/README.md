@@ -146,7 +146,8 @@ f. Lateral left (Ll)   #** 측면청진 - 협찹음을 제외한 소리를 얻�
          Fig. 2. Proposed concatenation-based augmentation.
 
 - => abnormal 클래스들의 분류 정확도 꽤(non-trivially) 향상
-- Smart_padding
+- 
+### 3) Smart_padding
 - 호흡 주기의 길이는 환자마다 다르고, 환자마다도 다양한 요소들(열났을 때 호흡율이 적당히 오르는 경우 등)에 따라 다르다
 - ICBHI 데이터셋 (호흡 사이클 길이 - 0.2초~16.2초, 평균 2.7초)
 - 우리의 네트워크는 고정된 인풋 사이즈를 기대
@@ -162,13 +163,13 @@ f. Lateral left (Ll)   #** 측면청진 - 협찹음을 제외한 소리를 얻�
             - 오버피팅 방지 효과
 
 
-### 3) Black Region Clipping
+### 4) Black Region Clipping
 - 스펙트로그램에서 높은 주파수 부분 쪽 검은 공간
 - 덜 중요한 정보 -> 성능에 역효과
 - 선택적으로 잘라내기
 - 특히 Litt3200 장비로 얻은 샘플들은 100%로 나타남.
     
-### 4) Device Specific Fine-tuning
+### 5) Device Specific Fine-tuning
 - 장비마다 다른 오디오 특성O → 일반화하기에는 심하게 왜곡됨
     - AKGC417L Microphone - 샘플의 63%
 - 4개 장비별로 데이터셋을 나눔 
@@ -199,11 +200,11 @@ resnet neural network with mixup data augmentation
 
 ### [참고] I. RespireNet (PPT논문) 내용 중 4. RELATED WORK
 
-Recently, there has been a lot of interest in using deep learning models for respiratory sounds classification [1, 9, 12]. It has outperformed(더 나은 결과를 내다, 능가하다) statistical methods (HMM-GMM) [8] and traditional machine learning methods (boosted decision trees, SVM) [4, 24]. In these deep learning based approaches, a time-frequency representation of the audio signal is provided as input to the model. Kochetov et al. [9] propose a deep recurrent network with a noise masking intermediate(중간의) step for the four class classification task, obtaining a score of 65.7% on the 80-20 split. However the paper omits the details regarding noise label generation [1], thus making it hard to reproduce. Deep residual networks and optimized S-transform based features are used by Chen et al. [6] for three-class classification of anomalies in lung sounds. The model is trained and tested on a smaller subset of the ICBHI dataset on a 70-30 split and achieve a score of 98%.
+Recently, there has been a lot of interest in using deep learning models for respiratory sounds classification [1, 9, 12]. It has outperformed statistical methods (HMM-GMM) [8] and traditional machine learning methods (boosted decision trees, SVM) [4, 24]. In these deep learning based approaches, a time-frequency representation of the audio signal is provided as input to the model. Kochetov et al. [9] propose a deep recurrent network with a noise masking intermediate step for the four class classification task, obtaining a score of 65.7% on the 80-20 split. However the paper omits the details regarding noise label generation [1], thus making it hard to reproduce. Deep residual networks and optimized S-transform based features are used by Chen et al. [6] for three-class classification of anomalies in lung sounds. The model is trained and tested on a smaller subset of the ICBHI dataset on a 70-30 split and achieve a score of 98%.
 
 ---
 
-호흡음 분류에 딥러닝을 사용한 최근 연구
+## (1) 호흡음 분류에 딥러닝을 사용한 최근 연구
 
 - Jyotibdha Acharya and Arindam Basu. Deep neural network
 for respiratory sound classification in wearable devices enabled by patient specific model tuning. IEEE Transactions on
@@ -217,151 +218,43 @@ Greece, October 4–7, 2018, Proceedings, Part III, pages 208–
 adventitious lung sound classification using non-local block
 resnet neural network with mixup data augmentation. 08 2020.
 
-딥러닝 베이스 모델은 이전에 사용되던 통계적 기법이나 전통적인 머신 러닝 기법(부스트 결정 트리, SVM)보다 나은 결과를 냄. 딥러닝 모델들은 소리 신호를 파형이미지로 바꾸어 모델에게 인풋데이터로 투입함. (중략) 4개 분류에 사용되는 deep recurrent nework는 65.7%(80-20split). 그러나, Deep residual networks와 특성들을 베이스로 최적화된(optimized) S-transform은 클래스 3개 분류에 사용된다. 이 모델은 70-30 분할로 ICBHI 데이터셋 중 더 작은 부분만 사용했고, 98%의 점수를 성취한다. (→ 혜선님이 추가적으로 찾아주신 부분)
+### Summary
+- Deep-learning based model은 이전에 사용되던 통계적 기법이나 전통적인 머신 러닝 기법(부스트 결정 트리, SVM)보다 나은 결과를 냄. 
+- 딥러닝 모델들은 소리 신호를 파형이미지로 바꾸어 모델에게 인풋데이터로 투입함. (중략) 4개 분류에 사용되는 deep recurrent nework는 65.7%(80-20split). 
+- Deep residual networks와 특성들을 베이스로 최적화된(optimized) S-transform은 클래스 3개 분류에 사용됨. (이 모델은 70-30 분할로 ICBHI 데이터셋 중 더 작은 부분만 사용했고, 98%의 점수를 성취하였음.)
 
-깃헙 링크 추가
 
-## 초록
+## Abstract
 
-Performing an automated adventitious lung sound detection is a challenging task since the sound is susceptible(민감한) to noises (heart-beat, motion artifacts(움직임 아티팩트 - 영상 촬영시 환자가 움직였을 때 발생되는 것), and audio sound) and there is subtle discrimination((식별되는) 차이) among different categories. An adventitious lung sound classification model, LungRN+NL, is proposed in this work, which has demonstrated a drastic improvement compared to our previous work and the state-of-the-art models. This new model has incorporated(포함하다) the non-local block in the ResNet architecture. To address the imbalance problem and to improve the robustness of the model, we have also incorporated the mixup method to augment the training dataset. Our model has been implemented and compared with the state-of-the-art works using the official ICBHI 2017 challenge dataset and their evaluation method. As a result, `**LungRN+NL**` has achieved a performance
+Performing an automated adventitious lung sound detection is a challenging task since the sound is susceptible to noises (heart-beat, motion artifacts, and audio sound) and there is subtle discrimination among different categories. An adventitious lung sound classification model, LungRN+NL, is proposed in this work, which has demonstrated a drastic improvement compared to our previous work and the state-of-the-art models. This new model has incorporated the non-local block in the ResNet architecture. To address the imbalance problem and to improve the robustness of the model, we have also incorporated the mixup method to augment the training dataset. Our model has been implemented and compared with the state-of-the-art works using the official ICBHI 2017 challenge dataset and their evaluation method. As a result, `**LungRN+NL**` has achieved a performance
 score of 52.26%, which is improved by 2.1-12.7% compared to
 the state-of-the-art models.
 
 **Index Terms**: adventitious lung sounds classification, mixup, data augmentation, convolutional neural network, non-local block
 
-- Summary 
+- ### Summary 
 
-LungRN+LN 이라는 모델에 ppt논문과 같은 데이터셋, 평가 방법을 사용한 사례 
-성능이 52.26%에서 2.1~12.7% 범위로 개선되어 시도해볼 법한 모델로 보입니다!
-
-
-## III. **A Window Width Optimized S-Transform **
-
-### **RESPIRENET**
-
-A DEEP NEURAL NETWORK FOR ACCURATELY DETECTING ABNORMAL LUNG SOUNDS IN LIMITED DATA SETTING
-
-[](https://arxiv.org/pdf/2011.00196.pdf)
-
----
-
-- Vocabs
-
-auscultation: 청진 / 환자의 몸안에서 나는 소리를 청취하여 질병의 여부 판단
-
-stethoscope: 청진기
-
-spirometry: 폐활량측정법
-
-Mel-spectogram: 음성 데이터를 raw data 그대로 사용하면 파라미터가 너무 많아지고 데이터 용량이 너무 커져 mel-spetogram으로 바꿔서 사용한다
-
-- Notes
-
-RespireNet - DNN을 사용하는 것이 당연히 효과가 좋지만 데이터가 많이 필요하다. 그러나 lung diseases의 데이터가 충분치 않기 때문에 작은 사이즈의 데이터로도 사용할 수 있는 CNN 베이스의 모델인 RespireNet을 소개한다
-
-Dataset:
-
-[ICBHI 2017 Challenge](https://bhichallenge.med.auth.gr/ICBHI_2017_Challenge)
-
-- 920 recordings from 126 patients
-- 4 classes: normal, crackle, wheeze, or both(crackle and wheeze)
-- for every patient, data was recorded at seven different body locations
-
-Pre-processing:
-
-- down-sample the recordings to 4kHz and apply a 5-th order Butterworth band-pass filter to remove noise(heartbeat, back-ground speech, etc.)
-- Butterworth filter
-
-[[파이썬 python] Butterworth filter / low pass filter / signal data filtering](https://arumyworld.tistory.com/20)
-
-- apply standard normalization on the input signal to map the values within the range(-1, 1)
-- then converted into a Mel-spectogram, which is fed into the DNN
-
-Network architecture:
-
-- CNN-based network, ResNet34
-- two 128-d FC linear layers with ReLU activation
-- last layer applies softmax activation to model classwise probabliities
-- Dropout is added to the FC layers to prevent overfitting
-- the network is trained via a standard categorical cross-entropy loss to minimize the loss for multi-class classification
-
-**2.1. Efficient Dataset Utilization**
-
-Transfer learning
-
-- initialize the network with weights of a pre-trained ResNet-34 network on ImageNet. This is followed by its training where trained the entire network end-to-end.
-- even though ImageNet dataset is very different from the spectograms, still found this initialization to help significantly. Most likely, low level features such as edge-detection are still similar and thus ‘transfer’ well
-
-Concatenation-based Augmentation
-
-- ICBHI dataset has a huge class imbalance, with the normal class accounting for 53% of the samples
-- to prevent model from overfitting on abnormal classes, experimented with several data augmentation techniques
-1. standard audio augmentation techiniques : noise addition, speed variation, random shifting, pitch shift,  etc. and also used a weighted random sampler to sample mini-batches uniformly from each class.
-2. to furthure improve generalization of the underrepresneted classes (wheeze, crackle, both), developed a concatenation based augmentation technique where we generate a new sample of a class by randomly sampling two samples of the same class and concatenating them → led to non-trivial improvement in the classification accuracy of abnormal classes
-
-Smart Padding
-
-The standard way to handle is to pad the audio signal to a fixed size via zero-padding or reflection based padding
-
-BUT came up with the Smart Padding scheme, which uses a variant of the augmentation scheme (same as above)
-
-For each data sample, smart padding first looks at the breathing cycle sample for the same patient taken just before and after the current one. If  this neighbouring cycle is of the same class or of the normal class, concatenate the current sample with it. If not, pad by copying the same cycle again
-
-→ continue this process until reaching the desired size
-
-→ this smart padding scheme also augments the data and helps prevent overfitting
-
-experimented different input lengths, and  found that 7s window performs the best
-
-- small window led to clipping of samples, thus loosing valuable information in an already scarce dataset
-- large window cuased repetition leading to degraded performance
-
-Blank Region Clipping
-
-Black region in a spectogram means that the audio signal has zero energy in the corresponding audio frequency range
-
-Device Specific Fine-tunning
-
-found that the classification accuracy to be strongly correlated with the training set size of the corresponding device
-
-- to address this, first train a common model with the full training data. Then make 4 copies of this model and fine-tune them for each device separately by using only the subset of training data for that device
-
-→ this approach significantly improve the performance, especially for the underrepresented devices
+- LungRN+LN 이라는 모델에 RespireNet 논문과 같은 데이터셋, 평가 방법을 사용한 사례이며, 성능이 52.26%에서 2.1~12.7% 범위로 개선되어 시도해볼 법한 모델로 판단됨.
 
 
-**3.0. Experiments**
-
-final score is computed as the mean of Sensitivity and Specificity
-
-**5. Conclusion**
-
-> The current performance limit of the 4-class classification
-task can be mainly attributed to the small size of the ICBHI
-dataset, and the variation among the recording devices. Furthermore, there is lack of standardization in the 80-20 split
-and we found variance in the results based on the particular
-split. In future, we would recommend that the community
-should focus on capturing a larger dataset, while taking care
-of the issues raised in this paper.
-> 
-
-
-### Triple-Classification of Respiratory Sounds Using Optimized S-Transform and Deep Residual Networks
+## III. **Triple-Classification of Respiratory Sounds Using Optimized S-Transform and Deep Residual Networks **
 
 RESPIRENET - related works에서 좋은 성과를 내어 선택 
 
+### Introduction
 > Deep residual networks and optimized S-transform
 based features are used by Chen et al. [6] for three-class classification of anomalies in lung sounds. The model is trained
 and tested on a smaller subset of the ICBHI dataset on a 70-30
 split and achieve a score of 98%
 > 
 
-문제정의
+### Problems
 
 > However, due to the contained artifacts and constrained feature extraction methods, the reliability and accuracy of the classification of wheeze, crackle, and normal sounds need significant improvement
 > 
 
-이 논문에서는 optimized S-transform(OST) 와 deep residual networks(ResNets)을 사용하여 wheeze, crackle and normal 을 분류
+이 논문에서는 optimized S-transform(OST) 와 deep residual networks(ResNets)을 사용하여 wheeze, crackle and normal 을 분류하였음.
 
-순서
+### Procedures
 
-먼저 raw respiratory sound 가 OST를 사용하여 processed → spectogram of OST 가 Resnet을 위해 rescaled → ResNet을 통해 feature learning 과 classification 을 하고 respiratory sound 의 클래스를 recognize
+먼저 raw respiratory sound 가 OST를 사용하여 processed → spectogram of OST 가 Resnet을 위해 rescaled → ResNet을 통해 feature learning 과 classification 을 하고 respiratory sound 의 클래스를 recognize하게 함.
