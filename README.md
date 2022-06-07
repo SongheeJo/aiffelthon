@@ -77,6 +77,7 @@
 - Classification of lung sounds using convolutional neural networks(2017)
 - respireNet(2020)
 - DC-UNet: Rethinking the U-Net Architecture with Dual Channel Efficient CNN for Medical Images Segmentation(2020)
+- LungRN+NL: An Improved Adventitious Lung Sound Classification Using Non-Local Block ResNet Neural Network with Mixup Data Augmentation(2020)
 - FILTERAUGMENT: AN ACOUSTIC ENVIRONMENTAL DATA AUGMENTATION METHOD(2021)
 
 
