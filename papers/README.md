@@ -1,43 +1,33 @@
 
 ## I. **RESPIRENET: A DEEP NEURAL NETWORK FOR ACCURATELY DETECTING ABNORMAL LUNG SOUNDS IN LIMITED DATA SETTING**
 
-## 초록
+## Abstract
 
-- 원문
+ - Auscultation of respiratory sounds is the primary tool for screening and diagnosing lung diseases. Automated analysis, coupled with digital stethoscopes, can play a crucial role in enabling tele-screening of fatal lung diseases. Deep neural networks (DNNs) have shown a lot of promise for such problems, and are an obvious choice. However, DNNs are extremely data hungry, and the largest respiratory dataset ICBHI has only 6898 breathing cycles, which is still small for training a satisfactory DNN model. In this work, RespireNet, we propose a simple CNN-based model, along with a suite of novel techniques—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding—enabling us to efficiently use the small-sized dataset. We perform extensive evaluation on the ICBHI dataset, and improve upon the state-of-the-art results for 4-class classification by 2.2%.
 
-    Auscultation(청진법) of respiratory sounds is the primary tool for screening and diagnosing lung diseases. Automated analysis, coupled with digital stethoscopes(청진기), can play a crucial
-    role in enabling tele-screening(원격 선별) of fatal lung diseases. Deep neural networks (DNNs) have shown a lot of promise(가능성) for such problems, and are an obvious choice. However, DNNs
-    are extremely data hungry, and the largest respiratory dataset ICBHI has only 6898 breathing cycles, which is still small for training a satisfactory DNN model. In this work,
-    RespireNet, we propose a simple CNN-based model, along with a suite of(한 벌의) novel(새로운) techniques—device specific fine-tuning, concatenation(연속)-based augmentation, blank region clipping,
-    and smart padding—enabling us to efficiently use the small-sized dataset. We perform extensive(폭넓은) evaluation on the ICBHI dataset, and improve upon the state-of-the-art results for 4-class classification by 2.2%.
+- Index Terms : Abnormality detection, lung sounds, crackle and wheeze, ICBHI dataset, deep learning
 
-    Index Terms(색인 용어) — Abnormality detection(이상 탐지), lung sounds, crackle(수포음) and wheeze(천명음), ICBHI dataset, deep learning
+- Data Augmentation : device specific fine-tuning, concatenation-based augmentation, blank region clipping, smart padding
 
-- 데이터 증강 방법: device specific fine-tuning, concatenation(연속)-based augmentation, blank region clipping, smart padding
-
-- 요약
+### Summary
 
     - 의료 데이터는 구하기 어렵다. 
-    - DNN도 성능이 좋을 것 같지만, 훈련시키려면 데이터가 부족하다. 
-      - 왜? Deep Neural Netwark는 훈련시키는 데에 많은 데이터가 필요하기 때문
-
-    ⇒ 본 논문에서는 심플한 CNN을 베이스로 한 모델인 `RespireNet`를 제안
+    - DNN도 성능이 좋을 것 같지만, 훈련시키려면 데이터가 부족하다. (Deep Neural Netwark는 훈련시키는 데에 많은 데이터가 필요하기 때문)
+    - 본 논문에서는 심플한 CNN을 베이스로 한 모델인 `RespireNet`를 제안함.
+    - 데이터 증강법 : device specific fine-tuning, concatenation-based augmentation, blank region clipping, smart padding 을 이용함.
 
 
 ### RespireNet Framework
 
 ![image](https://user-images.githubusercontent.com/67695343/166189313-a54288ff-39d8-407c-8937-d7da21e7e4b8.png)
 
-> 요약<br>
+> Summary <br>
 사운드 신호 전처리(bandpass filtering, downsampling, normalization, etc., ...) → concatenation-based 증강 → smart padding → mel-spectrogram 생성 → blank region clipping → 처리된 파형이미지를 모델에 넣음 → 모델 훈련 1단계: 훈련 세트 전체를 이용 → 2단계: 파인튜닝, 데이터중 각각의 장비에 맞는 부분만 사용하여 훈련!
 
 ## CONCLUSION AND FUTURE WORK
 
-- 원문
+- The paper proposes RespireNet a simple CNN-based model, along with a set of novel techniques—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding—enabling us to effectively utilize a small-sized dataset for accurate abnormality detection in lung sounds. Our proposed method achieved a new SOTA for the ICBHI dataset, on both the 2-class and 4-class classification tasks. Further, our proposed techniques are orthogonal to the choice of network architecture and should be easy to incorporate within other frameworks. The current performance limit of the 4-class classification task can be mainly attributed to the small size of the ICBHI dataset, and the variation among the recording devices. Furthermore, there is lack of standardization in the 80-20 split and we found variance in the results based on the particular split. In future, **we would recommend that the community should focus on capturing a larger dataset, while taking care of the issues raised in this paper.**
 
-    The paper proposes RespireNet a simple CNN-based model, along with a set of novel techniques—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding—enabling us to effectively utilize a small-sized dataset for accurate abnormality detection in lung sounds. Our proposed method achieved a new SOTA for the ICBHI dataset, on both the 2-class and 4-class classification tasks. Further, our proposed techniques are orthogonal(직각, 직교의) to the choice of network architecture and should be easy to incorporate(포함하다) within other frameworks. The current performance limit of the 4-class classification task can be mainly attributed to(~의 덕분이다) the small size of the ICBHI dataset, and the variation among the recording devices. Furthermore, there is lack of standardization in the 80-20 split and we found variance(변화(량)) in the results based on the particular split. In future, **we would recommend that the community should focus on capturing a larger dataset, while taking care of the issues raised in this paper.**
-
-- 요약
 
     ### 성과 요인
 
@@ -54,7 +44,6 @@ concatenation-based augmentation (CBA), blank region clipping (BRC) and device s
 
 ## (1) 데이터 증강방법에 관한 부분
 
-- 원문
 
     **2. METHOD**
     *Dataset*: We perform all evaluations on the ICBHI scientific challenge respiratory sound dataset. It is one of the largest publicly available respiratory datasets. The dataset comprises(구성되다) of 920 recordings from 126 patients with a combined total duration of 5.5 hours. Each breathing cycle in a recording is annotated by an expert as one of the four classes: normal, crackle, wheeze, or both (crackle and wheeze). The dataset comprises of recordings from four different devices from hospitals in Portugal and Greece. For every patient, data was recorded at seven different body locations.
