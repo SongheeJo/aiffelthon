@@ -19,7 +19,7 @@
 
 ### RespireNet Framework
 
-![image](https://user-images.githubusercontent.com/67695343/166189313-a54288ff-39d8-407c-8937-d7da21e7e4b8.png)
+![images/Respirenet_Framework.png](https://github.com/SongheeJo/aiffelthon/blob/main/images/Respirenet_Framework.png)
 
 > Summary <br>
 사운드 신호 전처리(bandpass filtering, downsampling, normalization, etc., ...) → concatenation-based 증강 → smart padding → mel-spectrogram 생성 → blank region clipping → 처리된 파형이미지를 모델에 넣음 → 모델 훈련 1단계: 훈련 세트 전체를 이용 → 2단계: 파인튜닝, 데이터중 각각의 장비에 맞는 부분만 사용하여 훈련!
@@ -30,7 +30,7 @@
 - The paper proposes RespireNet a simple CNN-based model, along with a set of novel techniques—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding—enabling us to effectively utilize a small-sized dataset for accurate abnormality detection in lung sounds. Our proposed method achieved a new SOTA for the ICBHI dataset, on both the 2-class and 4-class classification tasks. Further, our proposed techniques are orthogonal to the choice of network architecture and should be easy to incorporate within other frameworks. The current performance limit of the 4-class classification task can be mainly attributed to the small size of the ICBHI dataset, and the variation among the recording devices. Furthermore, there is lack of standardization in the 80-20 split and we found variance in the results based on the particular split. In future, **we would recommend that the community should focus on capturing a larger dataset, while taking care of the issues raised in this paper.**
 
 
-![images/Respirenet_Framework.png](https://github.com/SongheeJo/aiffelthon/blob/main/images/Respirenet_Framework.png)
+
 
  - concatenation-based augmentation (CBA), blank region clipping (BRC) and device specific fine-tuning (FT)
 
