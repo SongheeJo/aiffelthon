@@ -5,41 +5,38 @@
 
  - Auscultation of respiratory sounds is the primary tool for screening and diagnosing lung diseases. Automated analysis, coupled with digital stethoscopes, can play a crucial role in enabling tele-screening of fatal lung diseases. Deep neural networks (DNNs) have shown a lot of promise for such problems, and are an obvious choice. However, DNNs are extremely data hungry, and the largest respiratory dataset ICBHI has only 6898 breathing cycles, which is still small for training a satisfactory DNN model. In this work, RespireNet, we propose a simple CNN-based model, along with a suite of novel techniques—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding—enabling us to efficiently use the small-sized dataset. We perform extensive evaluation on the ICBHI dataset, and improve upon the state-of-the-art results for 4-class classification by 2.2%.
 
+- The paper proposes RespireNet a simple CNN-based model, along with a set of novel techniques—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding—enabling us to effectively utilize a small-sized dataset for accurate abnormality detection in lung sounds. Our proposed method achieved a new SOTA for the ICBHI dataset, on both the 2-class and 4-class classification tasks. Further, our proposed techniques are orthogonal to the choice of network architecture and should be easy to incorporate within other frameworks. The current performance limit of the 4-class classification task can be mainly attributed to the small size of the ICBHI dataset, and the variation among the recording devices. Furthermore, there is lack of standardization in the 80-20 split and we found variance in the results based on the particular split. In future, **we would recommend that the community should focus on capturing a larger dataset, while taking care of the issues raised in this paper.**
+
+
 - Index Terms : Abnormality detection, lung sounds, crackle and wheeze, ICBHI dataset, deep learning
 
 - Data Augmentation : device specific fine-tuning, concatenation-based augmentation, blank region clipping, smart padding
 
 ### Summary
 
-    - 의료 데이터는 구하기 어렵다. 
-    - DNN도 성능이 좋을 것 같지만, 훈련시키려면 데이터가 부족하다. (Deep Neural Netwark는 훈련시키는 데에 많은 데이터가 필요하기 때문)
+    - 작은 양의 ICBHI 데이터셋이며, 다양한 녹음기를 사용함.
+    - 특정한 split 비율에 근거하여 결과값에 variance를 찾음
+    - not 80-20 split! → 80-20은 standardization 하기엔 부족함.
+    - DNN도 성능이 좋을 것 같지만, 훈련시키려면 데이터가 부족함. (Deep Neural Netwark는 훈련시키는 데에 많은 데이터가 필요하기 때문)
     - 본 논문에서는 심플한 CNN을 베이스로 한 모델인 `RespireNet`를 제안함.
+    -  **이 논문에서 제기된 이슈 주의, 데이터셋의 양을 늘리는 거 자체에 집중하기를 추천**
     - 데이터 증강법 : device specific fine-tuning, concatenation-based augmentation, blank region clipping, smart padding 을 이용함.
-
+    
 
 ### RespireNet Framework
 
 ![images/Respirenet_Framework.png](https://github.com/SongheeJo/aiffelthon/blob/main/images/Respirenet_Framework.png)
 
-> Summary <br>
+
+### Summary <br>
 사운드 신호 전처리(bandpass filtering, downsampling, normalization, etc., ...) → concatenation-based 증강 → smart padding → mel-spectrogram 생성 → blank region clipping → 처리된 파형이미지를 모델에 넣음 → 모델 훈련 1단계: 훈련 세트 전체를 이용 → 2단계: 파인튜닝, 데이터중 각각의 장비에 맞는 부분만 사용하여 훈련!
 
 
 ### CONCLUSION AND FUTURE WORK
 
-- The paper proposes RespireNet a simple CNN-based model, along with a set of novel techniques—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding—enabling us to effectively utilize a small-sized dataset for accurate abnormality detection in lung sounds. Our proposed method achieved a new SOTA for the ICBHI dataset, on both the 2-class and 4-class classification tasks. Further, our proposed techniques are orthogonal to the choice of network architecture and should be easy to incorporate within other frameworks. The current performance limit of the 4-class classification task can be mainly attributed to the small size of the ICBHI dataset, and the variation among the recording devices. Furthermore, there is lack of standardization in the 80-20 split and we found variance in the results based on the particular split. In future, **we would recommend that the community should focus on capturing a larger dataset, while taking care of the issues raised in this paper.**
-
-
-
+![images/respirenet_performance.png](https://github.com/SongheeJo/aiffelthon/blob/main/images/respirenet_performance.png)
 
  - concatenation-based augmentation (CBA), blank region clipping (BRC) and device specific fine-tuning (FT)
-
-### Summary
-
-    1. 작은 양의 ICBHI 데이터셋, 그리고 녹음기들 사이의 다양화
-    2. 특정한 split 비율에 근거하여 결과값에 variance(변화(량))를 찾음
-    3. not 80-20 split! → 80-20은 표준화(standardization)하기엔 부족
-    4.  **이 논문에서 제기된 이슈 주의, 데이터셋의 양을 늘리는 거 자체에 집중하기를 추천**
 
 
 ## 논문에서 소개된 Sound data processing methods
@@ -91,7 +88,6 @@ Fig. 3. Blank region clipping: The network attention starts focusing more on the
     - normal / abnormal 클래스에 서로 다른 왜곡된 분포 + 서로 다른 샘플 길이
     - 데이터셋을 효율적으로 사용하고자 만든 간단한 호흡분류기 네트워크 구조와 기법들
     - 이 논문에서 소개되는 기법들은 여기서 사용된 네트워크 구조 뿐만아니라 다른 네트워크에도 쉽게 포함될 수 있도록 고안됨
-    
     
     
 
