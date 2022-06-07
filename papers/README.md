@@ -24,6 +24,7 @@
 > Summary <br>
 사운드 신호 전처리(bandpass filtering, downsampling, normalization, etc., ...) → concatenation-based 증강 → smart padding → mel-spectrogram 생성 → blank region clipping → 처리된 파형이미지를 모델에 넣음 → 모델 훈련 1단계: 훈련 세트 전체를 이용 → 2단계: 파인튜닝, 데이터중 각각의 장비에 맞는 부분만 사용하여 훈련!
 
+
 ### CONCLUSION AND FUTURE WORK
 
 - The paper proposes RespireNet a simple CNN-based model, along with a set of novel techniques—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding—enabling us to effectively utilize a small-sized dataset for accurate abnormality detection in lung sounds. Our proposed method achieved a new SOTA for the ICBHI dataset, on both the 2-class and 4-class classification tasks. Further, our proposed techniques are orthogonal to the choice of network architecture and should be easy to incorporate within other frameworks. The current performance limit of the 4-class classification task can be mainly attributed to the small size of the ICBHI dataset, and the variation among the recording devices. Furthermore, there is lack of standardization in the 80-20 split and we found variance in the results based on the particular split. In future, **we would recommend that the community should focus on capturing a larger dataset, while taking care of the issues raised in this paper.**
@@ -111,8 +112,7 @@ Biomedical Circuits and Systems, PP:1–1, 03 2020.
 - Kirill Kochetov, Evgeny Putin, Maksim Balashov, Andrey
 Filchenkov, and Anatoly Shalyto. Noise Masking Recurrent
 Neural Network for Respiratory Sound Classification: 27th International Conference on Artificial Neural Networks, Rhodes,
-Greece, October 4–7, 2018, Proceedings, Part III, pages 208–
-217. 10 2018. ISBN 978-3-030-01423-0.
+Greece, October 4–7, 2018, Proceedings, Part III, pages 208–217. 10 2018. ISBN 978-3-030-01423-0.
 - Yi Ma, Xinzi Xu, and Yongfu Li. Lungrn+nl: An improved
 adventitious lung sound classification using non-local block
 resnet neural network with mixup data augmentation. 08 2020.
@@ -123,10 +123,11 @@ resnet neural network with mixup data augmentation. 08 2020.
 Performing an automated adventitious lung sound detection is a challenging task since the sound is susceptible to noises (heart-beat, motion artifacts, and audio sound) and there is subtle discrimination among different categories. An adventitious lung sound classification model, LungRN+NL, is proposed in this work, which has demonstrated a drastic improvement compared to our previous work and the state-of-the-art models. This new model has incorporated the non-local block in the ResNet architecture. To address the imbalance problem and to improve the robustness of the model, we have also incorporated the mixup method to augment the training dataset. Our model has been implemented and compared with the state-of-the-art works using the official ICBHI 2017 challenge dataset and their evaluation method. As a result, `**LungRN+NL**` has achieved a performance score of 52.26%, which is improved by 2.1-12.7% compared to the state-of-the-art models.
 
 ### Summary
-   - Deep-learning based model은 이전에 사용되던 통계적 기법이나 전통적인 머신 러닝 기법(Boosting dedcision tree, SVM)보다 나은 결과를 냄. 
-   - 딥러닝 모델들은 소리 신호를 파형이미지로 바꾸어 모델에게 인풋데이터로 투입함. (중략) 4개 분류에 사용되는 deep recurrent nework는 65.7%(80-20split). 
-   - Deep residual networks와 특성들을 베이스로 최적화된(optimized) S-transform은 클래스 3개 분류에 사용됨. (이 모델은 70-30 분할로 ICBHI 데이터셋 중 더 작은 부분만 사용했고, 98%의 점수를 성취하였음.)
-   - LungRN+LN 이라는 모델에 RespireNet 논문과 같은 데이터셋, 평가 방법을 사용한 사례이며, 성능이 52.26%에서 2.1~12.7% 범위로 개선되어 시도해볼 법한 모델로 판단됨.
+
+    - Deep-learning based model은 이전에 사용되던 통계적 기법이나 전통적인 머신 러닝 기법(Boosting dedcision tree, SVM)보다 나은 결과를 냄. 
+    - 딥러닝 모델들은 소리 신호를 파형이미지로 바꾸어 모델에게 인풋데이터로 투입함. (중략) 4개 분류에 사용되는 deep recurrent nework는 65.7%(80-20split). 
+    - Deep residual networks와 특성들을 베이스로 최적화된(optimized) S-transform은 클래스 3개 분류에 사용됨. (이 모델은 70-30 분할로 ICBHI 데이터셋 중 더 작은 부분만 사용했고, 98%의 점수를 성취하였음.)
+    - LungRN+LN 이라는 모델에 RespireNet 논문과 같은 데이터셋, 평가 방법을 사용한 사례이며, 성능이 52.26%에서 2.1~12.7% 범위로 개선되어 시도해볼 법한 모델로 판단됨.
 
 **Index Terms**: adventitious lung sounds classification, mixup, data augmentation, convolutional neural network, non-local block
 
