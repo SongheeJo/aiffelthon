@@ -79,15 +79,15 @@ Fig. 3. Blank region clipping: The network attention starts focusing more on the
 
 ---
 
-### 데이터셋의 몇 가지 특성
+### 주의해야할 ICBHI 데이터셋의 특성
 
  In order to efficiently use the available data, we did extensive analysis of the ICBHI dataset. We found several characteristics of the data that might inhibit training DNNs effectively. For example, the dataset contains audio recordings from four different devices, with skewed distribution of samples across the devices, which makes it difficult for DNNs to generalize well across devices. Similarly, the dataset has a skewed distribution across normal and abnormal classes, and varying lengths of audio samples. We propose multiple novel techniques to address these problems—device specific fine-tuning, concatenation-based augmentation, blank region clipping, and smart padding. We perform extensive evaluation and ablation analysis of these techniques.
 
 ### Summary
-    - 위 데이터셋의 특성은 DNN을 효과적으로 돌리기 어렵게 함 
-    - 소리 샘플에 녹음기마다 서로 다른 왜곡된 분포 O  → 모델이 일반화된 학습을 하기에는 어렵다
+    - 위 데이터셋의 특성은 DNN을 효과적으로 돌리기 어려움 
+    - 소리 샘플에 녹음기마다 서로 다른 왜곡된 분포 O  → 모델이 일반화된 학습을 하기에는 어려움
     - normal / abnormal 클래스에 서로 다른 왜곡된 분포 + 서로 다른 샘플 길이
-    - 데이터셋을 효율적으로 사용하고자 만든 간단한 호흡분류기 네트워크 구조와 기법들
+    - 데이터셋을 효율적으로 사용하고자 만든 간단한 호흡분류기 네트워크 구조와 다양한 사운드데이터 처리기법이 요구됨.
     - 이 논문에서 소개되는 기법들은 여기서 사용된 네트워크 구조 뿐만아니라 다른 네트워크에도 쉽게 포함될 수 있도록 고안됨
     
     
