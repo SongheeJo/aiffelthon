@@ -79,9 +79,7 @@ Fig. 3. Blank region clipping: The network attention starts focusing more on the
 ### Dataset summary  :
 
 ① 920개 (126명의 환자에게서 녹음)
-
 ② 총 5.5시간
-
 ③ 클래스 4개 (normal, crackle, wheeze, both (crackle과 wheeze 둘 다 있는 경우))
 ④ 녹음기 종류 - 서로 다른 4개
 ⑤ 녹음 장소 : 포르투갈, 그리스
@@ -114,7 +112,7 @@ f. Lateral left (Ll)   #** 측면청진 - 협찹음을 제외한 소리를 얻�
 
 ---
 
-### 효율적인 데이터셋 이용 
+### 효율적인 데이터셋 이용 방법
 
 충분한 데이터양을 모으고자 사용할 수 있는 샘플들을 효과적으로 사용하게 하는 기법 
 
@@ -239,13 +237,12 @@ the state-of-the-art models.
 
 ## III. **Triple-Classification of Respiratory Sounds Using Optimized S-Transform and Deep Residual Networks **
 
-RESPIRENET - related works에서 좋은 성과를 내어 선택 
+RESPIRENET related works에서 98%라는 더 좋은 성과를 낸 논문 임.
 
 ### Introduction
 > Deep residual networks and optimized S-transform
 based features are used by Chen et al. [6] for three-class classification of anomalies in lung sounds. The model is trained
-and tested on a smaller subset of the ICBHI dataset on a 70-30
-split and achieve a score of 98%
+and tested on a smaller subset of the ICBHI dataset on a 70-30 split and achieve a score of 98%
 > 
 
 ### Problems
