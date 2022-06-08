@@ -101,20 +101,6 @@ Recently, there has been a lot of interest in using deep learning models for res
 
 ---
 
-### (1) 호흡음 분류에 딥러닝을 사용한 최근 연구
-
-- Jyotibdha Acharya and Arindam Basu. Deep neural network
-for respiratory sound classification in wearable devices enabled by patient specific model tuning. IEEE Transactions on
-Biomedical Circuits and Systems, PP:1–1, 03 2020.
-- Kirill Kochetov, Evgeny Putin, Maksim Balashov, Andrey
-Filchenkov, and Anatoly Shalyto. Noise Masking Recurrent
-Neural Network for Respiratory Sound Classification: 27th International Conference on Artificial Neural Networks, Rhodes,
-Greece, October 4–7, 2018, Proceedings, Part III, pages 208–217. 10 2018. ISBN 978-3-030-01423-0.
-- Yi Ma, Xinzi Xu, and Yongfu Li. Lungrn+nl: An improved
-adventitious lung sound classification using non-local block
-resnet neural network with mixup data augmentation. 08 2020.
-
-
 ### Abstract
 
 Performing an automated adventitious lung sound detection is a challenging task since the sound is susceptible to noises (heart-beat, motion artifacts, and audio sound) and there is subtle discrimination among different categories. An adventitious lung sound classification model, LungRN+NL, is proposed in this work, which has demonstrated a drastic improvement compared to our previous work and the state-of-the-art models. This new model has incorporated the non-local block in the ResNet architecture. To address the imbalance problem and to improve the robustness of the model, we have also incorporated the mixup method to augment the training dataset. Our model has been implemented and compared with the state-of-the-art works using the official ICBHI 2017 challenge dataset and their evaluation method. As a result, `**LungRN+NL**` has achieved a performance score of 52.26%, which is improved by 2.1-12.7% compared to the state-of-the-art models.
@@ -148,3 +134,17 @@ and tested on a smaller subset of the ICBHI dataset on a 70-30 split and achieve
 ### Procedures
 
 > raw respiratory sound 가 OST를 사용하여 processed → spectogram of OST 가 Resnet을 위해 rescaled → ResNet을 통해 feature learning 과 classification 을 하고 respiratory sound 의 클래스를 recognize하게 함.
+
+
+### 기타, 호흡음 분류에 딥러닝을 사용한 최근 연구
+
+- Jyotibdha Acharya and Arindam Basu. Deep neural network
+for respiratory sound classification in wearable devices enabled by patient specific model tuning. IEEE Transactions on
+Biomedical Circuits and Systems, PP:1–1, 03 2020.
+- Kirill Kochetov, Evgeny Putin, Maksim Balashov, Andrey
+Filchenkov, and Anatoly Shalyto. Noise Masking Recurrent
+Neural Network for Respiratory Sound Classification: 27th International Conference on Artificial Neural Networks, Rhodes,
+Greece, October 4–7, 2018, Proceedings, Part III, pages 208–217. 10 2018. ISBN 978-3-030-01423-0.
+- Yi Ma, Xinzi Xu, and Yongfu Li. Lungrn+nl: An improved
+adventitious lung sound classification using non-local block
+resnet neural network with mixup data augmentation. 08 2020.
