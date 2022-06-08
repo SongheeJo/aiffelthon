@@ -32,7 +32,7 @@
 
 - [참조 소스](https://github.com/Shivam-316/Respiratory-Disease-Detection) 실행 후 결과 확인
 - 다양한 모델 적용 후,  결과 비교
-- 과업 질병분류 모델의 정확도(accuracy)는 95% 이상이어야 함.
+- 과업 : 질병분류 모델 정확도(accuracy)는 95% 이상 달성
 - 민감도(sensitivity)와 특이도(specificity)를 계산할 것
 - 추가 과업 : 소리에서 수포음(crackle)와 천명음(wheeze) 존재 유무 확인
 
