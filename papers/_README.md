@@ -34,7 +34,7 @@
 
 ### CONCLUSION AND FUTURE WORK
 
-<p align="center">![images/respirenet_performance.png](https://github.com/SongheeJo/aiffelthon/blob/main/images/respirenet_performance.png)<p align="center">
+![images/respirenet_performance.png]<p align="center">(https://github.com/SongheeJo/aiffelthon/blob/main/images/respirenet_performance.png)<p align="center">
 
  - concatenation-based augmentation (CBA), blank region clipping (BRC) and device specific fine-tuning (FT)
 
@@ -94,10 +94,6 @@ Fig. 3. Blank region clipping: The network attention starts focusing more on the
 
 # II. An improved adventitious lung sound classification using non-local block
 : resnet neural network with mixup data augmentation으로서 98%를 달성함.
-
-### [참고] I. RespireNet (PPT논문) 내용 중 4. RELATED WORK
-
-Recently, there has been a lot of interest in using deep learning models for respiratory sounds classification [1, 9, 12]. It has outperformed statistical methods (HMM-GMM) [8] and traditional machine learning methods (boosted decision trees, SVM) [4, 24]. In these deep learning based approaches, a time-frequency representation of the audio signal is provided as input to the model. Kochetov et al. [9] propose a deep recurrent network with a noise masking intermediate step for the four class classification task, obtaining a score of 65.7% on the 80-20 split. However the paper omits the details regarding noise label generation [1], thus making it hard to reproduce. Deep residual networks and optimized S-transform based features are used by Chen et al. [6] for three-class classification of anomalies in lung sounds. The model is trained and tested on a smaller subset of the ICBHI dataset on a 70-30 split and achieve a score of 98%.
 
 ---
 
