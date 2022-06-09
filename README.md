@@ -70,10 +70,34 @@
 - ResNet
 
 ## 6. 결과 확인 (test.py)
-- f1 score, recall
+1) Task 1 : Pulmonary Disease classification
+
+<p align="center"><img width="392" alt="pulmonary_disease_classification_report" src="https://user-images.githubusercontent.com/97088101/172894322-12074c59-ad19-4a22-8451-86bf03397f3c.png"></p>
 
 
-## 7. 참고 논문
+2) Task 2 : Abnormal Lung sounds classification (additional)
+ - First_trial without smart_padding
+<img width="527" alt="first_trial_simple_CNN(2)" src="https://user-images.githubusercontent.com/97088101/172894713-acee990e-5e25-4ac6-842d-de0435423313.png">
+
+ <img width="234" alt="first_trial_simple_CNN(1)" src="https://user-images.githubusercontent.com/97088101/172894752-4edb56bc-7a36-4432-91d7-a031224caf39.png">
+
+ - Seocnd_trial with smart_padding
+ <img width="518" alt="second_trial_with_smart_padding(1)" src="https://user-images.githubusercontent.com/97088101/172894805-72c5f781-13fd-4a1f-9db1-8cf2b27bae09.png">
+<img width="230" alt="second_trial_with_smart_padding(2)" src="https://user-images.githubusercontent.com/97088101/172894831-60cf3552-4c20-4822-91d0-d12bfbff998b.png">
+
+ 
+## 7. 결 론
+
+- Medlcal data를 첫 번째 프로젝트로 진행하며, sound data에 대한 전반적인 이해와 다양한 pre-processing 방법을 시도해보는 것을 목표로 하였습니다.
+- RespireNet 논문 내용을 토대로, concantenated augmentation을 포함한, 다양한 augmentation 기법을 시도해 보았습니다.
+- 첫번째 과업인, 질병분류 모델에서 단순히, Resnet CNN model로 바꿈으로써 추가적 전처리 없이 96% 에 달성하는 성과를 보였습니다.
+- 두번째 과업에서는 Resnet 모델에서 보다 simple 한 CNN model이 더 높은 성능을 보였습니다.
+- Whezzing 및 Crackle sounds classification model에서 높은 성능을 보기 힘든 이유는, 본 비정상적인 호흡들은 fine -> moderate -> coarse한 단계를 가지며, 주파수 영역대 또한 비슷하게 포함하고 있어 높은 성능을 확인하기까지는 많은 어려움이 있음으로 판단됩니다.
+- Smart_padding 을 구현하여 train셋으로 활용하여 훈련한 결과, wheezing & crackle sound가 둘 다 있는 both class에 대해 높은 recall & f1-score를 보였으나, wheezing class에 대해서 점수가 낮아지는 것을 확인하였습니다.
+- 해커톤 발표를 통하여, 뒤늦게, data split을 데이터양 기준이 아닌, patient_id(PID)를 기준으로 나누어야 모델의 성능도 향상될 수 있음을 알게 되었으며, 향후 다양한 model building 과 함께 추가적인 test를 해볼 예정입니다.
+
+
+## 8. 참고 논문
 - A Window Width Optimized S-Transform(2008)
 - Classification of lung sounds using convolutional neural networks(2017)
 - respireNet(2020)
